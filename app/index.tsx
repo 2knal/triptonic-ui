@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from 'react-native';
-import Button from '../components/button';
-import ActionSheet from '../components/action-sheet';
+import Button from '../components/utils/button';
+import ActionSheet from '../components/utils/action-sheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useCallback, useRef, useState } from 'react';
+import Prompt from '../components/prompt';
 
 export default function App() {
   const [index, setIndex] = useState(-1);
@@ -19,17 +20,12 @@ export default function App() {
         ref={bottomSheetRef}
         index={index}
         handleSheetChanges={handleSheetChanges}
-        children={
-          <View style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-          </View>
-      } />
+        children={ <Prompt /> } />
       <View style={styles.buttonContainer}>
         {index < 0 && <Button title="Let's plan!" color='#EC988D' onPress={() => {
           handleOpenPress(1);
         }} />}
       </View>
-
     </View>
   );
 }
