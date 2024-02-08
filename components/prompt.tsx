@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Textarea from '../components/utils/textarea';
 import { View, StyleSheet } from 'react-native';
 import Button from './utils/button';
+import { Link } from 'expo-router';
 
 export default function Prompt() {
   const [text, setText] = useState('');
@@ -16,10 +17,12 @@ export default function Prompt() {
           title="Cancel"
           color='#F0Af9c'
           onPress={() => {}}/>
+        <Link href="/trip" asChild>
         <Button 
           title="Generate"
           color='#EC988D'
           onPress={() => {}}/>
+        </Link>
       </View>
     </View>
   );
