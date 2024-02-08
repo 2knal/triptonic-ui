@@ -4,14 +4,15 @@ import { Text, StyleSheet, Pressable } from 'react-native';
 interface IButtonProps {
   onPress: any;
   color?: string;
+  textColor?: string;
   title: string;
 }
 
 export default function Button(props: IButtonProps) {
-  const { onPress, title, color = styles.button.backgroundColor } = props;
+  const { onPress, title, color = styles.button.backgroundColor, textColor = styles.text.color } = props;
   return (
     <Pressable style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, { color: textColor }]}>{title}</Text>
     </Pressable>
   );
 }
