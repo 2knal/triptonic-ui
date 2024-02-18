@@ -5,6 +5,7 @@ import Button from './utils/button';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { Link } from 'expo-router';
 
+
 export default function Prompt() {
   const [text, setText] = useState('');
   const { close: closePrompt } = useBottomSheet();
@@ -21,7 +22,7 @@ export default function Prompt() {
           title="Cancel"
           color='#EDD5D1'
           onPress={() => closePrompt()}/>
-        <Link href="/trip" asChild>
+        <Link href="/details" asChild>
           <Button 
             title="Generate"
             color='#EC988D'

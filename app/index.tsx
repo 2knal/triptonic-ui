@@ -1,49 +1,73 @@
-import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import Button from '../components/utils/button';
 import ActionSheet from '../components/utils/action-sheet';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useCallback, useRef, useState } from 'react';
+import MapView from 'react-native-maps';
+
 import Prompt from '../components/prompt';
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 export default function App() {
   const [index, setIndex] = useState(-1);
-  const bottomSheetRef = useRef<BottomSheet>(null);
-	const handleOpenPress = (index: number) => bottomSheetRef.current?.snapToIndex(index);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const handleSheetChanges = useCallback((i: number) => {
     setIndex(i);
   }, []);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/screens/new_york.png')}
-        style={styles.image}
-      >
-        <ActionSheet
-          ref={bottomSheetRef}
-          index={index}
-          handleSheetChanges={handleSheetChanges}
-          children={ <Prompt /> } />
-        <View style={styles.buttonContainer}>
-          {index < 0 && <Button title="Let's plan!" color='#EC988D' onPress={() => {
-            handleOpenPress(1);
-          }} />}
+    // <GestureHandlerRootView style={{ flex: 1 }}>
+    // <BottomSheetModalProvider>
+    // <View style={styles.container}>
+    //   {/* <MapView style={styles.map} /> */}
+    //   <View style={styles.buttonContainer}>
+    //     <Button title="Let's plan!" color='#EC988D' onPress={() => bottomSheetRef.current?.present()} />
+    //   </View>
+      // <ActionSheet
+      //   ref={bottomSheetRef}
+      //   index={index}
+      //   handleSheetChanges={handleSheetChanges}
+      //   children={ <Prompt /> } />
+    // </View>
+    // </BottomSheetModalProvider>
+    // </GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <View style={styles.container}>
+          <MapView style={styles.map} />
+          <View style={styles.buttonContainer}>
+            <Button title='Open' onPress={() => bottomSheetRef.current?.present()} />
+          </View>
+          <BottomSheetModal
+            ref={bottomSheetRef}
+            index={1}
+            snapPoints={['25%', '50%', '75%']}
+          >
+            {/* <View>
+              <Text>Hello!</Text>
+            </View> */}
+            <Prompt />
+          </BottomSheetModal>
+          {/* <ActionSheet
+            ref={bottomSheetRef}
+            index={index}
+            handleSheetChanges={handleSheetChanges}
+            children={ <Prompt /> } /> */}
         </View>
-      </ImageBackground>
-    </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FEF4D9'
+    // backgroundColor: '#FEF4D9',
+    // width: '100%',
+    // height: '100%'
   },
-  contentContainer: {
-		flex: 1,
-		alignItems: 'center'
-	},
   buttonContainer: {
     position: 'absolute',
     bottom: '10%',
@@ -56,5 +80,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover', // or 'stretch' or 'contain' as needed
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+    zIndex: -2,
   },
 });

@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo, forwardRef, useCallback } from 'react';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
@@ -9,7 +9,7 @@ interface IActionSheetProps {
   handleSheetChanges: any;
 }
 
-type Ref = BottomSheet;
+type Ref = BottomSheetModal;
 
 
 const ActionSheet = forwardRef<Ref, IActionSheetProps>((props, ref) => {
@@ -20,18 +20,20 @@ const ActionSheet = forwardRef<Ref, IActionSheetProps>((props, ref) => {
 	);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <BottomSheet
-        ref={ref}
-        index={props.index}
-        snapPoints={snapPoints}
-        enablePanDownToClose={true}
-        backdropComponent={renderBackdrop}
-        onChange={props.handleSheetChanges}
-      >
-        {props.children}
-      </BottomSheet>
-    </GestureHandlerRootView>
+    // <GestureHandlerRootView style={{ flex: 1 }}>
+    //   <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={ref}
+          index={props.index}
+          snapPoints={snapPoints}
+          enablePanDownToClose={true}
+          backdropComponent={renderBackdrop}
+          onChange={props.handleSheetChanges}
+        >
+          {props.children}
+        </BottomSheetModal>
+    //   </BottomSheetModalProvider>
+    // </GestureHandlerRootView>
   );
 });
 
