@@ -5,12 +5,12 @@
     "scheme": "one.triptonic",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/triptonic-app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/triptonic-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FEF4D9"
+      "backgroundColor": "#FFF2EE"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -20,13 +20,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/triptonic-app-icon.png",
+        "backgroundColor": "#FFF2EE"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/triptonic-logo.png",
       "bundler": "metro"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/bricolage.ttf", "./assets/fonts/rethink.ttf", "./assets/fonts/rethink-italic.ttf"]
+        }
+      ]
+    ]
   }
 }

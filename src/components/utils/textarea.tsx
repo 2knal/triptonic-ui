@@ -14,6 +14,7 @@ const Textarea: React.FC<ITextareaProps> = ({ text, onChangeText, placeholder })
       multiline={true}
       onChangeText={onChangeText}
       style={{ height: '80%', textAlignVertical: 'top' }}
+      className='font-rethink text-xl'
       value={text}/>
   );
 }

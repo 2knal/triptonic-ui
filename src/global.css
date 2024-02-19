@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'bricolage';
+  src: url('../assets/fonts/bricolage.ttf') format('truetype');
+  /* Optionally, you can specify font-weight and font-style */
+}
+
+@font-face {
+  font-family: 'rethink';
+  src: url('../assets/fonts/rethink.ttf') format('truetype');
+  /* Optionally, you can specify font-weight and font-style */
+}
+
+@font-face {
+  font-family: 'rethink-italic';
+  src: url('../assets/fonts/rethink-italic.ttf') format('truetype');
+  /* Optionally, you can specify font-weight and font-style */
+}
