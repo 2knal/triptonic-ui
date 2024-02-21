@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import Textarea from '../components/utils/textarea';
 import { Link } from 'expo-router';
-import Button from '../components/utils/button';
+import BackButton from '@/components/utils/back-button';
+import ForwardButton from '@/components/utils/forward-button';
 
 export default function Save() {
     const [text, onChangeText] = useState();
@@ -15,6 +16,10 @@ export default function Save() {
                     color='#EC988D'
                     onPress={() => {}}/>
                 </Link> */}
+              <Link href='/trip' asChild>
+        <BackButton 
+          title="<"/>
+      </Link>
             <Text style={styles.normalText}>Every trip must have a cool name</Text>
             <TextInput 
                 style={styles.input}
@@ -22,6 +27,10 @@ export default function Save() {
                 // onChangeText={onChangeText}
                 value={text}>
             </TextInput>
+            <Link href='/trip' asChild>
+        <ForwardButton 
+          title=">"/>
+      </Link>
         </View>
     )
 }
