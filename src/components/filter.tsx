@@ -25,7 +25,7 @@ export default function Filter() {
     }
 
     const onChangeDist = (dist: number) => {
-
+      
     }
 
     const onChangeAge = (age: number) => {
