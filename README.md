@@ -23,6 +23,8 @@
 - [ ] Google map styles - https://mapstyle.withgoogle.com/
 - [ ] Decide upon loader animations - lottie
 - [ ] Add back navigation button to map view screens
+- [ ] Make the filter screen button clickables.
+- [ ] Make progress with the save page and login page.
 
 ---
 

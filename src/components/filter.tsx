@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
-import Textarea from '../components/utils/textarea';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Button from './utils/button';
 import { Text } from 'react-native';
 import SmallBtn from './utils/smallBtn';
@@ -9,71 +8,75 @@ import Slider from '@react-native-community/slider';
 
 export default function Filter() {
     const { close: closePrompt } = useBottomSheet();
-    const cuisineList = ['🍕Italian', '🍛Indian', '🍜Japanese', '🌮Mexican', '🍟French', '🍖Chinese', '🍙Korean'];
-    const placesToVisit = ['🎢 Park', '🦖 Museums', '🕺🏻Clubs'];
 
-    const [selectCuisines, setSelectCuisines] = useState([]);
-    const [selectPlaces, setSelectPlaces] = useState([]);
+    const [cuisineMap, setCuisineMap] = useState({'🍕Italian': false, '🍛Indian': false, '🍜Japanese':false, '🌮Mexican':false, '🍟French':false, '🍖Chinese':false, '🍙Korean':false});
+    const [placesMap, setPlacesMap] = useState({'🎢 Park': false, '🦖 Museums': false, '🕺🏻Clubs': false});
+    const [distance, setDistance] = useState(0);
+    const [age, setAge] = useState(0);
 
-    const onCuisineBtnPress = () => {
-      
+    const onCuisineBtnPress = (cuisine: string) => {
+      cuisineMap[cuisine] = true;
+      setCuisineMap(cuisineMap);
     }
 
-    const onPlacesBtnPress = () => {
+    const onPlacesBtnPress = (place: string) => {
+      placesMap[place] = true;
+      setPlacesMap(placesMap);
+    }
+
+    const onChangeDist = (dist: number) => {
+
+    }
+
+    const onChangeAge = (age: number) => {
 
     }
 
     return(
-        <View style={styles.container}>
-            <View style={{alignItems: "center"}}>
-              <Text style = {styles.mainText}>Applied Filters</Text>
+        <View className='flex-1 color-black-12 p-5'>
+            <View className='items-center'>
+              <Text className='font-bricolage text-2xl'>Applied Filters</Text>
             </View>
 
-            <View style={styles.normalRow}>
-              <Text style={styles.normalText}>Cuisine</Text>
-              <View style={styles.btnbox}>
-                {cuisineList.map((cuisine, i) => (
-                  (cuisine == '🍜Japanese') ? 
-                  <SmallBtn key={i} title={cuisine} selected={true} onPress={() => {}}/> :
-                  <SmallBtn key={i} title={cuisine} selected={false} onPress={() => {}}/> 
-                ))}
-              </View>
+            <Text className='font-rethink text-lg p-1 tracking-widest'>Cuisine</Text>
+            <View className='flex-row items-center justify-around flex-wrap'>
+                {
+                  Object.keys(cuisineMap).map((cuisine, i) => {
+                    console.log(cuisine, cuisineMap[cuisine]);
+                    return <SmallBtn key={i} title={cuisine} selected={cuisineMap[cuisine]} onPress={() => onCuisineBtnPress(cuisine)}/> 
+                  })
+                }
             </View>
 
-            <View style={styles.normalRow}>
-              <Text style={styles.normalText}>Distance</Text>
-              <Slider
-                style={styles.sliders}
-                minimumValue={0}
-                maximumValue={100}
-                minimumTrackTintColor="#EC988D"
-                maximumTrackTintColor="grey"
-              />
+            <Text className='font-rethink text-lg p-1 tracking-widest'>Distance</Text>
+            <Slider
+              className='flex-1'
+              minimumValue={0}
+              maximumValue={100}
+              minimumTrackTintColor="#EC988D"
+              maximumTrackTintColor="grey"
+            />
+
+            <Text className='font-rethink text-lg p-1 tracking-widest'>Age</Text>
+            <Slider
+              className='flex-1'
+              minimumValue={0}
+              maximumValue={100}
+              minimumTrackTintColor="#EC988D"
+              maximumTrackTintColor="grey"
+            />
+
+            <Text className='font-rethink text-lg p-1 tracking-widest'>Places to visit</Text>
+            <View className='flex-row items-center justify-around flex-wrap'>
+                {
+                  Object.keys(placesMap).map((place, i) => {
+                    console.log(place, placesMap[place]);
+                    return <SmallBtn key={i} title={place} selected={placesMap[place]} onPress={() => onPlacesBtnPress(place)}/> 
+                  })
+                }
             </View>
 
-            <View style={styles.normalRow}>
-              <Text style={styles.normalText}>Age</Text>
-              <Slider
-                style={styles.sliders}
-                minimumValue={0}
-                maximumValue={100}
-                minimumTrackTintColor="#EC988D"
-                maximumTrackTintColor="grey"
-              />
-            </View>
-
-            <View style={styles.normalRow}>
-              <Text style={styles.normalText}>Places to visit</Text>
-              <View style={styles.btnbox}>
-                {placesToVisit.map(places => (
-                  (places == '🦖 Museums') ? 
-                  <SmallBtn title={places} selected={true} onPress={() => {}}/> :
-                  <SmallBtn title={places} selected={false} onPress={() => {}}/>
-                ))}
-              </View>
-            </View>
-
-            <View style = {styles.buttonRow}>
+            <View className='absolute gap-5 bottom-20 flex-row self-center'>
             <Button
             textColor='#B6B6B6'
             title="Cancel"
@@ -87,59 +90,3 @@ export default function Filter() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    sliders: {
-      width: 350,
-      height: 200
-    },
-    container: {
-      flex: 1,
-      color: '#1E1E1E',
-      padding: 20
-    },
-    buttonRow: {
-      position: 'absolute',
-      bottom: '10%',
-      alignSelf: 'center',
-      flexDirection: 'row',
-      gap: 20,
-    },
-    btnbox: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      flexWrap: 'wrap',
-    },
-    normalRow: {
-      flexDirection: 'column',
-      alignSelf: 'baseline', 
-      paddingTop: 10,
-      paddingBottom: 10
-    },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 16,
-        paddingHorizontal: 28,
-        borderRadius: 40,
-        elevation: 3,
-        backgroundColor: 'black',
-        width: 160,
-        textAlign: 'center'
-      },
-      mainText: {
-        fontSize: 20,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'black',
-      },
-      normalText: {
-        fontSize: 15,
-        padding: 5,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'black',
-      }
-  });
