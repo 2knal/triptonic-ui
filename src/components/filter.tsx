@@ -9,28 +9,52 @@ import Slider from '@react-native-community/slider';
 export default function Filter() {
     const { close: closePrompt } = useBottomSheet();
 
-    const [cuisineMap, setCuisineMap] = useState({'🍕Italian': false, '🍛Indian': false, '🍜Japanese':false, '🌮Mexican':false, '🍟French':false, '🍖Chinese':false, '🍙Korean':false});
-    const [placesMap, setPlacesMap] = useState({'🎢 Park': false, '🦖 Museums': false, '🕺🏻Clubs': false});
+    const allCuisine = ['🍕Italian', '🍛Indian', '🍜Japanese', '🌮Mexican', '🍟French', '🍖Chinese', '🍙Korean'];
+    const allPlaces = ['🎢 Park', '🦖 Museums', '🕺🏻Clubs'];
+    const [cuisineList, setCuisineList] = useState([]);
+    const [placesList, setPlacesList] = useState([]);
     const [distance, setDistance] = useState(0);
     const [age, setAge] = useState(0);
+    const [toggle, setToggle] = useState(0);
 
     const onCuisineBtnPress = (cuisine: string) => {
-      cuisineMap[cuisine] = true;
-      setCuisineMap(cuisineMap);
+      if (cuisineList.includes(cuisine)) {
+        const index = cuisineList.indexOf(cuisine);
+        cuisineList.splice(index, 1);
+      }
+      else {
+        cuisineList.push(cuisine);
+        setCuisineList(cuisineList);
+      }
+      setToggle(toggle + 1)
     }
 
     const onPlacesBtnPress = (place: string) => {
-      placesMap[place] = true;
-      setPlacesMap(placesMap);
+      if (placesList.includes(place)) {
+        const index = placesList.indexOf(place);
+        placesList.splice(index, 1);
+      }
+      else {
+        placesList.push(place);
+        setCuisineList(placesList);
+      }
+      setToggle(toggle + 1)
     }
 
     const onChangeDist = (dist: number) => {
-      
+      setDistance(dist);
     }
 
-    const onChangeAge = (age: number) => {
-
+    const onChangeAge = (tempAge: number) => {
+      setDistance(tempAge);
     }
+
+    useEffect(() => {
+      setPlacesList(placesList);
+      setCuisineList(cuisineList);
+      setDistance(distance);
+      setAge(age);
+    }, [distance, age, toggle])
 
     return(
         <View className='flex-1 color-black-12 p-5'>
@@ -41,37 +65,43 @@ export default function Filter() {
             <Text className='font-rethink text-lg p-1 tracking-widest'>Cuisine</Text>
             <View className='flex-row items-center justify-around flex-wrap'>
                 {
-                  Object.keys(cuisineMap).map((cuisine, i) => {
-                    console.log(cuisine, cuisineMap[cuisine]);
-                    return <SmallBtn key={i} title={cuisine} selected={cuisineMap[cuisine]} onPress={() => onCuisineBtnPress(cuisine)}/> 
+                  allCuisine.map((cuisine, i) => {
+                    return <SmallBtn key={i} title={cuisine} list={cuisineList} onPress={() => onCuisineBtnPress(cuisine)}/> 
                   })
                 }
             </View>
 
-            <Text className='font-rethink text-lg p-1 tracking-widest'>Distance</Text>
+            <View className='flex-row justify-between'>
+              <Text className='font-rethink text-lg p-1 tracking-widest'>Distance (miles)</Text>
+              <Text className='font-rethink right-2 p-1 text-lg tracking-widest'>{distance}</Text>
+            </View>
             <Slider
               className='flex-1'
               minimumValue={0}
               maximumValue={100}
               minimumTrackTintColor="#EC988D"
               maximumTrackTintColor="grey"
+              onValueChange={(dist) => setDistance(Math.round(dist))}
             />
 
-            <Text className='font-rethink text-lg p-1 tracking-widest'>Age</Text>
+            <View className='flex-row justify-between'>
+              <Text className='font-rethink text-lg p-1 tracking-widest'>Age</Text>
+              <Text className='font-rethink right-2 p-1 text-lg tracking-widest'>{age}</Text>
+            </View>
             <Slider
               className='flex-1'
               minimumValue={0}
               maximumValue={100}
               minimumTrackTintColor="#EC988D"
               maximumTrackTintColor="grey"
+              onValueChange={(age) => setAge(Math.round(age))}
             />
 
             <Text className='font-rethink text-lg p-1 tracking-widest'>Places to visit</Text>
             <View className='flex-row items-center justify-around flex-wrap'>
                 {
-                  Object.keys(placesMap).map((place, i) => {
-                    console.log(place, placesMap[place]);
-                    return <SmallBtn key={i} title={place} selected={placesMap[place]} onPress={() => onPlacesBtnPress(place)}/> 
+                  allPlaces.map((place, i) => {
+                    return <SmallBtn key={i} title={place} list={placesList} onPress={() => onPlacesBtnPress(place)}/> 
                   })
                 }
             </View>
