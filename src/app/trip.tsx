@@ -4,45 +4,43 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
-import { useCallback, useRef, useState } from "react";
-import { useLocalSearchParams, useGlobalSearchParams, Link } from "expo-router";
-
+import { useEffect, useRef, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Filter from "@/components/filter";
 import NavBar from "@/components/utils/navbar";
 import Prompt from "@/components/prompt";
 import MapView, { Callout, Marker } from "react-native-maps";
 
-const markers = [
-	// San Francisco
-	{
-		latitude: 37.7749,
-		longitude: -122.4194,
-		latitudeDelta: 0.01,
-		longitudeDelta: 0.01,
-		name: 'San Francisco City Center'
-	},
-	{
-		latitude: 37.8077,
-		longitude: -122.475,
-		latitudeDelta: 0.01,
-		longitudeDelta: 0.01,
-		name: 'Golden Gate Bridge'
-	}
-];
-
 export default function Trip() {
-  const { data } = useLocalSearchParams();
-  console.log("params", data, typeof data);
-  // const mapData = JSON.parse(params?.data ?? "{}");
-  // console.log(params, mapData);
-
-  // console.log(mapData, typeof mapData);
+  const [markers, setMarkers] = useState([]);
   const [navbarScr, setNavbarScr] = useState(1);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+  
   const handleOpenPress = (scrNo: number) => {
     bottomSheetRef.current?.present();
     setNavbarScr(scrNo);
   };
+
+  async function getData() {
+    const jsonStr = await AsyncStorage.getItem('GENERATED_TEXT');
+    const jsonData = JSON.parse(jsonStr);
+    for (let i = 0; i < jsonData.results.length; i++) {
+      const lat = jsonData.results[i].geometry.location.lat;
+      const lng = jsonData.results[i].geometry.location.lng;
+      const mark = {
+        latitude: lat,
+        longitude: lng,
+        latitudeDelta: 1,
+        longitudeDelta: 1,
+        name: jsonData.results[i].name
+      };
+      setMarkers(markers => [...markers, mark]);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -64,8 +62,8 @@ export default function Trip() {
             coordinate={marker}
           >
             <Callout>
-              <View style={{ padding: 10 }}>
-                <Text style={{ fontSize: 24 }}>Hello</Text>
+              <View style={{ padding: 5 }}>
+                <Text style={{ fontSize: 18 }}>{marker.name}</Text>
               </View>
             </Callout>
           </Marker>
