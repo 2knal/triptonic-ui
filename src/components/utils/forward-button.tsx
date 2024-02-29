@@ -1,7 +1,8 @@
+import Login from '@/app/login';
 import React, { useState } from 'react';
 import { Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
 
-const ForwardButton = ({ title, left, right, top, bottom }) => {
+const ForwardButton = ({ title, onPress }) => {
     const [isClicked, setIsClicked] = useState(false);
   
     const handlePressIn = () => {
@@ -18,6 +19,7 @@ const ForwardButton = ({ title, left, right, top, bottom }) => {
       <TouchableOpacity
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
+        onPress={onPress}
         style={[styles.button, { backgroundColor: buttonColor }]}>
         <Text style={styles.text}>{'\u2192'}</Text>
       </TouchableOpacity>

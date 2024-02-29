@@ -8,7 +8,7 @@ import {
 import Prompt from "@/components/prompt";
 import ActionSheet from "@/components/utils/action-sheet";
 
-export default function Index() {
+export default function Main() {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = ["48%", "72%"];
 

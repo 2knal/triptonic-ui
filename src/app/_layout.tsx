@@ -1,21 +1,35 @@
 import "../global.css";
-import { Slot } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 
 import Header from "@/components/header";
 import { useFonts } from "expo-font";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SetStateAction, useEffect, useState } from "react";
+import Splash from "@/components/Splash";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const [fontsLoaded] = useFonts({
+  const [appReady, setAppReady] = useState(false);
+    const [fontsLoaded] = useFonts({
     bricolage: require("../../assets/fonts/bricolage.ttf"),
     rethink: require("../../assets/fonts/rethink.ttf"),
     "rethink-italic": require("../../assets/fonts/rethink-italic.ttf"),
   });
 
-  if (!fontsLoaded) {
-    return null;
+  useEffect(() => {
+    if(fontsLoaded) {
+      SplashScreen.hideAsync();
+      setAppReady(true);
+    }
+  }, [fontsLoaded]);
+
+  if (!appReady) {
+    return (
+      <Splash setIsLoading={setAppReady}/>
+    );
   }
 
   return (

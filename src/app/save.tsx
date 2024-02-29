@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Textarea from '../components/utils/textarea';
-import { Link } from 'expo-router';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TextInput, Button} from 'react-native';
 import BackButton from '@/components/utils/back-button';
 import ForwardButton from '@/components/utils/forward-button';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Save() {
-    const [text, onChangeText] = useState();
-
+    const [text, setText] = useState('');
+    const navigation = useNavigation();
+    
     return (
         <View style={styles.container}>
                 {/* <Link href='/trip' asChild>
@@ -16,21 +16,15 @@ export default function Save() {
                     color='#EC988D'
                     onPress={() => {}}/>
                 </Link> */}
-              <Link href='/trip' asChild>
-        <BackButton 
-          title="<"/>
-      </Link>
+        <BackButton title="<-" onPress={()=>this.props.navigation.navigate('Trip')}/>
             <Text style={styles.normalText}>Every trip must have a cool name</Text>
             <TextInput 
                 style={styles.input}
                 placeholder='New York Trip!'
-                // onChangeText={onChangeText}
+                onChangeText={(text) => setText(text)}
                 value={text}>
             </TextInput>
-            <Link href='/trip' asChild>
-        <ForwardButton 
-          title=">"/>
-      </Link>
+        <ForwardButton title="->" onPress={()=>this.props.navigation.navigate('Login')}/>
         </View>
     )
 }
