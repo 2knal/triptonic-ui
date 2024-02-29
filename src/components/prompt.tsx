@@ -30,9 +30,11 @@ export default function Prompt() {
         })
       }
 
-      // const url = "https://gauravghati.github.io/apis/restaurent.json";
-      const url = "http://localhost:3000/maps/restaurents"
-      const response = await fetch(url, options);
+      // const url = "http://localhost:3000/maps/restaurents"
+      // const response = await fetch(url, options);
+
+      const url = "https://gauravghati.github.io/apis/restaurent.json";
+      const response = await fetch(url);
       const jsondata = await response.json();
       await AsyncStorage.setItem('GENERATED_TEXT', JSON.stringify(jsondata));
       router.push({ pathname: "/trip" });
