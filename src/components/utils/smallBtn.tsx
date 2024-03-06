@@ -3,18 +3,19 @@ import { Text, StyleSheet, Pressable } from 'react-native';
 
 interface IButtonProps {
   onPress: any;
-  title: string;
-  selected: boolean;
+  title: string;  
+  list: any[];
 }
 
 export default function SmallBtn(props: IButtonProps) {
-  const {onPress, title, selected} = props;
+  const {onPress, title, list} = props;
 
-  const extStyle = selected ? styles.selected: '';
-  const extText = selected ? {color: 'white'} : ''; 
+  const selected = list.includes(title);
+  const extStyle = selected ? styles.selected: styles.nothing;
+  const extText = selected ? {color: 'white'}: styles.nothing;
 
   return (
-    <Pressable style={[styles.button,  extStyle]} onPress={onPress}>
+    <Pressable style={[styles.button, extStyle]} onPress={onPress}>
       <Text style={[styles.text, extText]}>{title}</Text>
     </Pressable>
   );
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EC988D'
   },
+  nothing: {},
   selected: {
     backgroundColor: '#EC988D'
   },

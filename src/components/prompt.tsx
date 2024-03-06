@@ -1,39 +1,51 @@
 import React, { useState } from "react";
 import Textarea from "../components/utils/textarea";
 import { View, StyleSheet, Text, Pressable } from "react-native";
-import Button from "./utils/button";
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { Link } from "expo-router";
 import { router } from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const reqBody = {
+  'neighborhood': 'USC',
+  'city': 'Los Angeles',
+  'category': 'Burger'
+}
 
 export default function Prompt() {
   const [text, setText] = useState("");
   const { close: closePrompt } = useBottomSheet();
 
-  const generateTrip = async () => {
+  async function fetchtheAPI() {
     try {
-      const response = await fetch(
-        "https://7542-68-101-122-32.ngrok-free.app/maps/restaurants"
-      );
-      // const response = await fetch(
-      //   "https://7542-68-101-122-32.ngrok-free.app/maps/textsearch",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ text }),
-      //   }
-      // );
+      var options = {
+        method : 'POST',
+        headers : { 
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "neighborhood" : reqBody.neighborhood,
+            "city" : reqBody.city,
+            "category": reqBody.category
+        })
+      }
 
-      const data = await response.json();
-      console.log(data);
+      // const url = "http://localhost:3000/maps/restaurents"
+      // const response = await fetch(url, options);
 
-      router.push({ pathname: "/trip", params: { data: data.results } });
+      const url = "https://gauravghati.github.io/apis/restaurent.json";
+      const response = await fetch(url);
+      const jsondata = await response.json();
+      await AsyncStorage.setItem('GENERATED_TEXT', JSON.stringify(jsondata));
+      router.push({ pathname: "/trip" });
     } catch (error) {
       console.error(error);
     }
-  };
+  }
+  
+  const generateTrip = () => {
+    fetchtheAPI();
+  }
 
   return (
     <View style={styles.container}>
