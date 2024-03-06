@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { View } from 'react-native';
-import Button from './utils/button';
+import Button from './utils/cool-button';
 import { Text } from 'react-native';
 import SmallBtn from './utils/smallBtn';
 import Slider from '@react-native-community/slider';

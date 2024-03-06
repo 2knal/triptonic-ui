@@ -1,27 +1,51 @@
 import "../global.css";
 import { Slot } from "expo-router";
-
-import Header from "@/components/header";
 import { useFonts } from "expo-font";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import Header from "@/components/header";
+import { COLORS } from "assets/constants";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { Animated, Easing } from "react-native";
+import Splash from "@/components/splash";
+
 export default function Layout() {
+  const animationProgress = useRef(new Animated.Value(0));
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fontsLoaded] = useFonts({
-    bricolage: require("../../assets/fonts/bricolage.ttf"),
-    rethink: require("../../assets/fonts/rethink.ttf"),
-    "rethink-italic": require("../../assets/fonts/rethink-italic.ttf"),
+    bricolage: require("../../assets/fonts/bricolage/bricolage.ttf"),
+    rethink: require("../../assets/fonts/rethink/rethink.ttf")
   });
+
+  const onApplicationReady = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(animationProgress.current, {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    ).start();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
   }
 
+  if (isLoading) {
+    return <Splash setIsLoading={onApplicationReady} />;
+  }
+
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="dark" backgroundColor="#FFF2EE" />
+        <StatusBar style="dark" backgroundColor={COLORS["egg-white"]} />
         <Header />
         <Slot />
       </GestureHandlerRootView>

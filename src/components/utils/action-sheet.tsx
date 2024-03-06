@@ -1,6 +1,5 @@
 import React, { ReactNode, useMemo, forwardRef, useCallback } from 'react';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 
 interface IActionSheetProps {

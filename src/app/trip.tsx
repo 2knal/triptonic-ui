@@ -1,15 +1,14 @@
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import { View, Text } from "react-native";
 import ActionSheet from "@/components/utils/action-sheet";
-import BottomSheet, {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useEffect, useRef, useState } from "react";
+import MapView, { Callout, Marker } from "react-native-maps";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Filter from "@/components/filter";
 import NavBar from "@/components/utils/navbar";
 import Prompt from "@/components/prompt";
-import MapView, { Callout, Marker } from "react-native-maps";
+
 
 export default function Trip() {
   const [markers, setMarkers] = useState([]);
@@ -43,7 +42,7 @@ export default function Trip() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View className="flex">
       <MapView
         style={{ width: "100%", height: "100%" }}
         initialRegion={{
@@ -80,28 +79,3 @@ export default function Trip() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FEF4D9",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  buttonContainer: {
-    position: "absolute",
-    bottom: "10%",
-    alignSelf: "center",
-    zIndex: 1000,
-  },
-  button: {
-    backgroundColor: "#EC988D",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover", // or 'stretch' or 'contain' as needed
-  },
-});

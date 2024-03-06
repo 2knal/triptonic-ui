@@ -1,34 +1,35 @@
 import React, { useState } from "react";
 import Textarea from "../components/utils/textarea";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { Link } from "expo-router";
 import { router } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CoolButton from "@/components/utils/cool-button";
 
 const reqBody = {
-  'neighborhood': 'USC',
-  'city': 'Los Angeles',
-  'category': 'Burger'
-}
+  neighborhood: "USC",
+  city: "Los Angeles",
+  category: "Burger",
+};
 
 export default function Prompt() {
   const [text, setText] = useState("");
   const { close: closePrompt } = useBottomSheet();
 
-  async function fetchtheAPI() {
+  const generateTrip = async () => {
     try {
-      var options = {
-        method : 'POST',
-        headers : { 
-            'Content-Type': 'application/json'
-        },
-        body : JSON.stringify({
-            "neighborhood" : reqBody.neighborhood,
-            "city" : reqBody.city,
-            "category": reqBody.category
-        })
-      }
+      // var options = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     neighborhood: reqBody.neighborhood,
+      //     city: reqBody.city,
+      //     category: reqBody.category,
+      //   }),
+      // };
 
       // const url = "http://localhost:3000/maps/restaurents"
       // const response = await fetch(url, options);
@@ -36,16 +37,12 @@ export default function Prompt() {
       const url = "https://gauravghati.github.io/apis/restaurent.json";
       const response = await fetch(url);
       const jsondata = await response.json();
-      await AsyncStorage.setItem('GENERATED_TEXT', JSON.stringify(jsondata));
+      await AsyncStorage.setItem("GENERATED_TEXT", JSON.stringify(jsondata));
       router.push({ pathname: "/trip" });
     } catch (error) {
       console.error(error);
     }
-  }
-  
-  const generateTrip = () => {
-    fetchtheAPI();
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -55,18 +52,18 @@ export default function Prompt() {
         onChangeText={(t: string) => setText(t)}
       />
       <View style={styles.row}>
-        <Pressable
-          className="bg-powder-gold w-48 flex items-center justify-center px-4 py-4 rounded-3xl"
-          onPress={() => closePrompt()}
-        >
-          <Text className="font-rethink text-2xl color-egg-white">Cancel</Text>
-        </Pressable>
+        <CoolButton
+          onPress={closePrompt}
+          buttonCss="bg-bluei w-48"
+          textCss="color-egg-white"
+          text={"Cancel"}
+        />
         <Link href="/trip" asChild>
           <Pressable
-            className="bg-mintish  w-48 flex items-center justify-center px-4 py-4 rounded-3xl"
+            className="flex items-center justify-center px-4 py-3 rounded-full bg-sageish w-48"
             onPress={generateTrip}
           >
-            <Text className="font-rethink text-2xl color-dark-text">
+            <Text className="font-rethink text-2xl color-egg-white">
               Generate!
             </Text>
           </Pressable>
