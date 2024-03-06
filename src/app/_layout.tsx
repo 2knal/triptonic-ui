@@ -6,8 +6,7 @@ import { useFonts } from "expo-font";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SetStateAction, useEffect, useState } from "react";
-import Splash from "@/components/Splash";
+import { useEffect, useState } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,9 +26,7 @@ export default function Layout() {
   }, [fontsLoaded]);
 
   if (!appReady) {
-    return (
-      <Splash setIsLoading={setAppReady}/>
-    );
+    return null;
   }
 
   return (

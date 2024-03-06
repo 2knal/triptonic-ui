@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
 
-const BackButton = ({ title, onPress}) => {
+const BackButton = ({ title }) => {
     const [isClicked, setIsClicked] = useState(false);
   
     const handlePressIn = () => {
@@ -18,7 +18,6 @@ const BackButton = ({ title, onPress}) => {
       <TouchableOpacity
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={onPress}
         style={[styles.button, { backgroundColor: buttonColor }]}>
         <Text style={styles.text}>{'\u2190'}</Text>
       </TouchableOpacity>

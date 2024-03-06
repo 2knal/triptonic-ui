@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button} from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button, Pressable} from 'react-native';
 import BackButton from '@/components/utils/back-button';
 import ForwardButton from '@/components/utils/forward-button';
 import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 export default function Save() {
     const [text, setText] = useState('');
@@ -16,7 +17,9 @@ export default function Save() {
                     color='#EC988D'
                     onPress={() => {}}/>
                 </Link> */}
-        <BackButton title="<-" onPress={()=>this.props.navigation.navigate('Trip')}/>
+                <Link href='/trip' asChild>
+        <BackButton title="<-"/>
+        </Link>
             <Text style={styles.normalText}>Every trip must have a cool name</Text>
             <TextInput 
                 style={styles.input}
