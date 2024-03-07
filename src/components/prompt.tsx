@@ -9,11 +9,11 @@ import Textarea from "@/components/utils/textarea";
 import CoolButton from "@/components/utils/cool-button";
 import { TRIP } from "assets/constants";
 
-// const reqBody = {
-//   neighborhood: "USC",
-//   city: "Los Angeles",
-//   category: "Burger",
-// };
+const reqBody = {
+  neighborhood: "USC",
+  city: "Los Angeles",
+  category: "Burger",
+};
 
 export default function Prompt() {
   const [text, setText] = useState("");
@@ -27,15 +27,28 @@ export default function Prompt() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: text
+          neighborhood: reqBody.neighborhood,
+          city: reqBody.city,
+          category: reqBody.category,
         }),
       };
+      // var options = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     neighborhood: reqBody.neighborhood,
+      //     city: reqBody.city,
+      //     category: reqBody.category,
+      //   }),
+      // };
 
-      const url = "http://localhost:3000/maps/restaurents"
-      const response = await fetch(url, options);
+      // const url = "http://localhost:3000/maps/restaurents"
+      // const response = await fetch(url, options);
 
-      // const url = "https://gauravghati.github.io/apis/restaurent.json";
-      // const response = await fetch(url);
+      const url = "https://gauravghati.github.io/apis/restaurent.json";
+      const response = await fetch(url);
       const jsondata = await response.json();
       await AsyncStorage.setItem(TRIP.DETAILS, JSON.stringify(jsondata));
       router.push({ pathname: "/trip" });
