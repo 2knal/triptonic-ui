@@ -27,29 +27,18 @@ export default function Prompt() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          neighborhood: reqBody.neighborhood,
-          city: reqBody.city,
-          category: reqBody.category,
+          prompt: text
         }),
       };
-      // var options = {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     neighborhood: reqBody.neighborhood,
-      //     city: reqBody.city,
-      //     category: reqBody.category,
-      //   }),
-      // };
 
-      // const url = "http://localhost:3000/maps/restaurents"
-      // const response = await fetch(url, options);
+      const url = "https://21c2-2600-8802-2601-7c0-4518-d8eb-ad47-9ffa.ngrok-free.app/prompt"
+      const response = await fetch(url, options);
 
-      const url = "https://gauravghati.github.io/apis/restaurent.json";
-      const response = await fetch(url);
+      // const url = "https://gauravghati.github.io/apis/restaurent.json";
+      // const response = await fetch(url);
       const jsondata = await response.json();
+      await AsyncStorage.clear();
+      await AsyncStorage.flushGetRequests();
       await AsyncStorage.setItem(TRIP.DETAILS, JSON.stringify(jsondata));
       router.push({ pathname: "/trip" });
     } catch (error) {

@@ -12,7 +12,7 @@ type Ref = BottomSheetModal;
 
 
 const ActionSheet = forwardRef<Ref, IActionSheetProps>((props, ref) => {
-  const snapPoints = useMemo(() => ['48%', '72%', '90%'], []);
+  const snapPoints = useMemo(() => ['72%', '90%'], []);
   const renderBackdrop = useCallback(
 		(props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
 		[]
