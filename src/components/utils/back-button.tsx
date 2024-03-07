@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
 
-const BackButton = ({ title }) => {
-    const [isClicked, setIsClicked] = useState(false);
-  
-    const handlePressIn = () => {
-      setIsClicked(true);
-    };
-  
-    const handlePressOut = () => {
-      setIsClicked(false);
-    };
-  
+
+const BackButton = () => {
+    const [isClicked, setIsClicked] = useState(false);  
     const buttonColor = isClicked ? '#EC988D' : '#FFC8B8'; 
   
     return (
       <TouchableOpacity
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
+        onPressIn={() => setIsClicked(true)}
+        onPressOut={() => setIsClicked(false)}
         style={[styles.button, { backgroundColor: buttonColor }]}>
         <Text style={styles.text}>{'\u2190'}</Text>
       </TouchableOpacity>

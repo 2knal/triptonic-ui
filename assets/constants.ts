@@ -10,3 +10,7 @@ export const COLORS = {
   'darker-text': '#374259',
   'dark-text': '#545B77',
 }
+
+export const TRIP = {
+  DETAILS: 'GENERATED_TRIP'
+}

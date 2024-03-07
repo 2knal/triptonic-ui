@@ -25,6 +25,10 @@
 - [ ] Add back navigation button to map view screens
 - [ ] Make the filter screen button clickables.
 - [ ] Make progress with the save page and login page.
+- [ ] Show loader when we call the API and until markers are shown on the page.
+- [ ] Integrate a state management library like redux or zustand to pass data from one page to another instead of using AsyncStorage
+- [ ] Handle trip page's navbar's absolute bottom positioning, why is it not the same as the landing page.
+- [ ] Trip page buttons, on hover circular selection color around it.
 
 ---
 

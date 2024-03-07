@@ -1,8 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
-import { View } from 'react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link } from 'expo-router';
+import React from "react";
+import { Pressable } from "react-native";
+import { View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Link } from "expo-router";
+import { COLORS } from "assets/constants";
 
 interface INavBarProps {
   onPress: any;
@@ -11,37 +12,21 @@ interface INavBarProps {
 export default function NavBar(props: INavBarProps) {
   const { onPress } = props;
 
-  const onPressOpenSave = () => {
-  }
-
   return (
-    <View style={{alignItems: 'center'}}>
-      <View style={[styles.mainView]}>
+    <View className="flex justify-center">
+      <View className="bg-reddish w-60 py-4 rounded-full flex flex-row justify-around">
         <Pressable onPress={() => onPress(1)}>
-          <FontAwesome name="pencil" color="#FFF2EE" size={24}/>
+          <FontAwesome name="pencil" color={COLORS["egg-white"]} size={24} />
         </Pressable>
         <Pressable onPress={() => onPress(2)}>
-          <FontAwesome name="sliders" color="#FFF2EE" size={24}/>
+          <FontAwesome name="sliders" color={COLORS["egg-white"]} size={24} />
         </Pressable>
-        <Pressable onPress={() => onPressOpenSave}>
-          <Link href='/save' asChild>
-            <FontAwesome name="floppy-o" color="#FFF2EE" size={24}/>
+        <Pressable onPress={() => {}}>
+          <Link href="/save" asChild>
+            <FontAwesome name="floppy-o" color={COLORS["egg-white"]} size={24} />
           </Link>
         </Pressable>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  mainView: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    bottom: "10%",
-    flexDirection: 'row',
-    backgroundColor: '#EC988D',
-    height: 62,
-    borderRadius: 40,
-    width: 200
-  }
-});

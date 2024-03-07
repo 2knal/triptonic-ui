@@ -7,7 +7,7 @@ interface IButtonProps {
   list: any[];
 }
 
-export default function SmallBtn(props: IButtonProps) {
+export default function Pill(props: IButtonProps) {
   const {onPress, title, list} = props;
 
   const selected = list.includes(title);

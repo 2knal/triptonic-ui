@@ -1,7 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
 import { COLORS } from "assets/constants";
+
+import Heading from "@/components/utils/heading";
+
 
 interface ISplashProps {
   setIsLoading: Dispatch<SetStateAction<Boolean>>;
@@ -24,11 +27,7 @@ export default function Splash({ setIsLoading }: ISplashProps) {
         onAnimationFinish={() => setIsLoading(false)}
       />
       <View className="absolute bottom-14">
-        <Text
-          className="text-4xl color-darker-text font-bricolage mt-2"
-        >
-          TripTonic
-        </Text>
+        <Heading title="TripTonic" css="text-3xl mt-2" />
       </View>
     </View>
   );

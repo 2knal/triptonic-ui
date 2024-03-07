@@ -1,5 +1,9 @@
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import Heading from "@/components/utils/heading";
+
+
 
 export default function Header() {
   const { top } = useSafeAreaInsets();
@@ -11,11 +15,7 @@ export default function Header() {
           style={{ width: 42, height: 42 }}
           className="mr-1"
         />
-        <Text
-          className="text-3xl color-darker-text font-bricolage mt-2"
-        >
-          TripTonic
-        </Text>
+        <Heading title="TripTonic" css="text-3xl" />
       </View>
     </View>
   );

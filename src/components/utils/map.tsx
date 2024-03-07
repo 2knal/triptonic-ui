@@ -1,6 +1,11 @@
+import { ReactNode } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
-export default function Map() {
+interface IMapProps {
+  children?: ReactNode;
+}
+
+export default function Map({ children }: IMapProps) {
   return (
     <MapView
       style={{ width: "100%", height: "100%" }}
@@ -13,6 +18,8 @@ export default function Map() {
         latitudeDelta: 1,
         longitudeDelta: 2,
       }}
-    />
+    >
+      {children}
+    </MapView>
   );
 }
