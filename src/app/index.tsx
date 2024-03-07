@@ -24,7 +24,7 @@ export default function Index() {
   }
 
   return (
-    <Main/>
+    <Login/>
 
       //  <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
       //    <Stack.Screen name="Main" component={Main} />

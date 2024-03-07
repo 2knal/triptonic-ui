@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.triptonicui"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/triptonic-app-icon.png",
         "backgroundColor": "#FFF2EE"
-      }
+      },
+      "package": "com.anonymous.triptonicui"
     },
     "web": {
       "favicon": "./assets/triptonic-logo.png",
@@ -32,7 +34,11 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/bricolage.ttf", "./assets/fonts/rethink.ttf", "./assets/fonts/rethink-italic.ttf"]
+          "fonts": [
+            "./assets/fonts/bricolage.ttf",
+            "./assets/fonts/rethink.ttf",
+            "./assets/fonts/rethink-italic.ttf"
+          ]
         }
       ]
     ]
