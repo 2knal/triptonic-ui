@@ -16,7 +16,7 @@ export default function NavBar(props: INavBarProps) {
 
   return (
     <View className="flex justify-center">
-      <View className="bg-reddish w-60 py-4 rounded-full flex flex-row justify-around">
+      <View className="bg-reddish w-64 py-4 rounded-full flex flex-row justify-around">
         <NavBarIcon
           onPress={() => onPress(1)}
           optionSelectedCss={optionNo === 1 ? 'bg-egg-white' : ''}

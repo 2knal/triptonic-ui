@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Textarea from "@/components/utils/textarea";
 import CoolButton from "@/components/utils/cool-button";
 import { TRIP } from "assets/constants";
+import { usePromptStore } from "@/store";
 
 const reqBody = {
   neighborhood: "USC",
@@ -16,7 +17,8 @@ const reqBody = {
 };
 
 export default function Prompt() {
-  const [text, setText] = useState("");
+  const prompt = usePromptStore((state) => state.prompt);
+  const changePrompt = usePromptStore((state) => state.changePrompt);
   const { close: closePrompt } = useBottomSheet();
 
   const generateTrip = async () => {
@@ -27,7 +29,7 @@ export default function Prompt() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: text
+          prompt
         }),
       };
 
@@ -50,8 +52,8 @@ export default function Prompt() {
     <View style={styles.container}>
       <Textarea
         placeholder="Enter Trip prompt..."
-        text={text}
-        onChangeText={(t: string) => setText(t)}
+        text={prompt}
+        onChangeText={(t: string) => changePrompt(t)}
       />
       <View style={styles.row}>
         <CoolButton
