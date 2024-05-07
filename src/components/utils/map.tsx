@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { INITIAL_MAP_LOCATION } from 'assets/constants';
 
 interface IMapProps {
   children?: ReactNode;
@@ -12,12 +13,7 @@ export default function Map({ children }: IMapProps) {
       provider={PROVIDER_GOOGLE}
       showsUserLocation
       showsMyLocationButton
-      initialRegion={{
-        latitude: 32.8241205,
-        longitude: -117.4386322,
-        latitudeDelta: 1,
-        longitudeDelta: 2,
-      }}
+      initialRegion={INITIAL_MAP_LOCATION}
     >
       {children}
     </MapView>

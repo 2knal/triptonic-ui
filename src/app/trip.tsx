@@ -45,31 +45,18 @@ export default function Trip() {
     getData();
   }, []);
 
-  // Call fitToSuppliedMarkers() method on the MapView after markers get updated
   useEffect(() => {
     if (mapRef.current && markers.length > 0) {
-      // list of _id's must same that has been provided to the identifier props of the Marker
-      mapRef.current.fitToSuppliedMarkers(
-        markers.map(({ _id }) => _id),
-        { animated: true }
-      );
+      mapRef.current.animateCamera({ center: markers[0], zoom: 12 }, { duration: 2000 })
     }
   }, [markers]);
 
   return (
-    <View className="flex">
+    <View className="flex flex-1 bg-egg-white">
       <MapView
         ref={mapRef}
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
-        showsUserLocation
-        showsMyLocationButton
-        initialRegion={{
-          latitude: 37.8241205,
-          longitude: -117.4386322,
-          latitudeDelta: 1,
-          longitudeDelta: 2,
-        }}
       >
         {markers.map((marker, index) => (
           <Marker
@@ -85,8 +72,8 @@ export default function Trip() {
           </Marker>
         ))}
       </MapView>
-      <View className="absolute bottom-32 self-center">
-        <NavBar onPress={handleOpenPress} />
+      <View className="absolute bottom-14 self-center">
+        <NavBar onPress={handleOpenPress} optionNo={navbarScr} />
       </View>
       <ActionSheet
         ref={bottomSheetRef}

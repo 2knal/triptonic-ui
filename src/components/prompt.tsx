@@ -31,11 +31,11 @@ export default function Prompt() {
         }),
       };
 
-      const url = "https://21c2-2600-8802-2601-7c0-4518-d8eb-ad47-9ffa.ngrok-free.app/prompt"
-      const response = await fetch(url, options);
+      // const url = "https://21c2-2600-8802-2601-7c0-4518-d8eb-ad47-9ffa.ngrok-free.app/prompt"
+      // const response = await fetch(url, options);
 
-      // const url = "https://gauravghati.github.io/apis/restaurent.json";
-      // const response = await fetch(url);
+      const url = "https://gauravghati.github.io/apis/restaurent.json";
+      const response = await fetch(url);
       const jsondata = await response.json();
       await AsyncStorage.clear();
       await AsyncStorage.flushGetRequests();
@@ -57,7 +57,7 @@ export default function Prompt() {
         <CoolButton
           onPress={closePrompt}
           buttonCss="bg-bluei w-48"
-          textCss="color-egg-white"
+          textCss="color-dark-text"
           text={"Cancel"}
         />
         <Link href="/trip" asChild>
@@ -65,7 +65,7 @@ export default function Prompt() {
             className="flex items-center justify-center px-4 py-3 rounded-full bg-sageish w-48"
             onPress={generateTrip}
           >
-            <Text className="font-rethink text-2xl color-egg-white">
+            <Text className="font-rethink text-2xl color-dark-text">
               Generate!
             </Text>
           </Pressable>
