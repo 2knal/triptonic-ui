@@ -10,6 +10,7 @@ import { COLORS } from "assets/constants";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { Animated, Easing } from "react-native";
 import Splash from "@/components/splash";
+import { ToastProvider } from "react-native-toast-notifications";
 
 export default function Layout() {
   const animationProgress = useRef(new Animated.Value(0));
@@ -44,11 +45,13 @@ export default function Layout() {
 
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="dark" backgroundColor={COLORS["egg-white"]} />
-        <Header />
-        <Slot />
-      </GestureHandlerRootView>
+      <ToastProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar style="dark" backgroundColor={COLORS["egg-white"]} />
+          <Header />
+          <Slot />
+        </GestureHandlerRootView>
+      </ToastProvider>
     </SafeAreaProvider>
   );
 }

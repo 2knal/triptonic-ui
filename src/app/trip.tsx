@@ -2,16 +2,16 @@ import { View, Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useEffect, useRef, useState } from "react";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Filter from "@/components/filter";
 import NavBar from "@/components/utils/navbar";
 import Prompt from "@/components/prompt";
 import Map from "@/components/utils/map";
 import ActionSheet from "@/components/utils/action-sheet";
-import { TRIP } from "assets/constants";
+import { useAPIStore } from "@/store";
 
 export default function Trip() {
+  const apiData = useAPIStore((state) => state.data);
   const [markers, setMarkers] = useState([]);
   const [navbarScr, setNavbarScr] = useState(1);
   const mapRef = useRef<MapView>();
@@ -23,19 +23,17 @@ export default function Trip() {
   };
 
   useEffect(() => {
-    async function getData() {
-      const jsonStr = await AsyncStorage.getItem(TRIP.DETAILS);
-      const jsonData = JSON.parse(jsonStr);
+    function getData() {
       let data = [];
-      for (let i = 0; i < jsonData.results.length; i++) {
-        const lat = jsonData.results[i].geometry.location.lat;
-        const lng = jsonData.results[i].geometry.location.lng;
+      for (let i = 0; i < apiData.results.length; i++) {
+        const lat = apiData.results[i].geometry.location.lat;
+        const lng = apiData.results[i].geometry.location.lng;
         const mark = {
           latitude: lat,
           longitude: lng,
           latitudeDelta: 1,
           longitudeDelta: 1,
-          name: jsonData.results[i].name,
+          name: apiData.results[i].name,
         };
         data = [...data, mark];
       }
@@ -43,7 +41,7 @@ export default function Trip() {
     }
 
     getData();
-  }, []);
+  }, [apiData]);
 
   useEffect(() => {
     if (mapRef.current && markers.length > 0) {

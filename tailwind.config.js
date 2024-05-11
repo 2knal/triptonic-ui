@@ -18,6 +18,7 @@ module.exports = {
       'reddish': '#FA796B',
       'darker-text': '#374259',
       'dark-text': '#545B77',
+      'white': '#FFFFFF'
     },
     extend: {},
   },

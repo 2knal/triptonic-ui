@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { Link } from "expo-router";
@@ -8,7 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Textarea from "@/components/utils/textarea";
 import CoolButton from "@/components/utils/cool-button";
 import { TRIP } from "assets/constants";
-import { usePromptStore } from "@/store";
+import { usePromptStore, useAPIStore } from "@/store";
+import { useToast } from "react-native-toast-notifications";
 
 const reqBody = {
   neighborhood: "USC",
@@ -17,32 +18,24 @@ const reqBody = {
 };
 
 export default function Prompt() {
+  const toast = useToast();
   const prompt = usePromptStore((state) => state.prompt);
   const changePrompt = usePromptStore((state) => state.changePrompt);
+  const apiData = useAPIStore((state) => state.data);
+  const setData = useAPIStore((state) => state.setData);
   const { close: closePrompt } = useBottomSheet();
 
   const generateTrip = async () => {
+    if (prompt === '') {
+      toast.show("Please add a text prompt");
+      return;
+    }
     try {
-      var options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt
-        }),
-      };
-
-      // const url = "https://21c2-2600-8802-2601-7c0-4518-d8eb-ad47-9ffa.ngrok-free.app/prompt"
-      // const response = await fetch(url, options);
-
       const url = "https://gauravghati.github.io/apis/restaurent.json";
       const response = await fetch(url);
       const jsondata = await response.json();
-      await AsyncStorage.clear();
-      await AsyncStorage.flushGetRequests();
-      await AsyncStorage.setItem(TRIP.DETAILS, JSON.stringify(jsondata));
-      router.push({ pathname: "/trip" });
+      setData(jsondata);
+      router.push({ pathname: '/trip' });
     } catch (error) {
       console.error(error);
     }
@@ -59,19 +52,23 @@ export default function Prompt() {
         <CoolButton
           onPress={closePrompt}
           buttonCss="bg-bluei w-48"
-          textCss="color-dark-text"
+          textCss="color-white"
           text={"Cancel"}
         />
-        <Link href="/trip" asChild>
-          <Pressable
+        <CoolButton
+          onPress={generateTrip}
+          buttonCss="bg-sageish w-48"
+          textCss="color-white"
+          text={"Generate"}
+        />
+          {/* <Pressable
             className="flex items-center justify-center px-4 py-3 rounded-full bg-sageish w-48"
             onPress={generateTrip}
           >
-            <Text className="font-rethink text-2xl color-dark-text">
+            <Text className="font-rethink text-2xl color-white">
               Generate!
             </Text>
-          </Pressable>
-        </Link>
+          </Pressable> */}
       </View>
     </View>
   );
