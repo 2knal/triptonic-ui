@@ -1,28 +1,18 @@
 import React  from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useBottomSheet } from "@gorhom/bottom-sheet";
-import { Link } from "expo-router";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Textarea from "@/components/utils/textarea";
 import CoolButton from "@/components/utils/cool-button";
-import { TRIP } from "assets/constants";
-import { usePromptStore, useAPIStore } from "@/store";
+import { usePromptStore } from "@/store";
 import { useToast } from "react-native-toast-notifications";
 
-const reqBody = {
-  neighborhood: "USC",
-  city: "Los Angeles",
-  category: "Burger",
-};
 
 export default function Prompt() {
   const toast = useToast();
   const prompt = usePromptStore((state) => state.prompt);
   const changePrompt = usePromptStore((state) => state.changePrompt);
-  const apiData = useAPIStore((state) => state.data);
-  const setData = useAPIStore((state) => state.setData);
   const { close: closePrompt } = useBottomSheet();
 
   const generateTrip = async () => {
@@ -30,15 +20,7 @@ export default function Prompt() {
       toast.show("Please add a text prompt");
       return;
     }
-    try {
-      const url = "https://gauravghati.github.io/apis/restaurent.json";
-      const response = await fetch(url);
-      const jsondata = await response.json();
-      setData(jsondata);
-      router.push({ pathname: '/trip' });
-    } catch (error) {
-      console.error(error);
-    }
+    router.push({ pathname: '/trip' });
   };
 
   return (
