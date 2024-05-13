@@ -52,7 +52,7 @@ export default function Filter() {
       tripTypeList.splice(index, 1);
     } else {
       tripTypeList.push(tripType);
-      setCuisineList(tripTypeList);
+      setTripTypeList(tripTypeList);
     }
     setToggle(toggle + 1);
   };
@@ -63,7 +63,7 @@ export default function Filter() {
       transportList.splice(index, 1);
     } else {
       transportList.push(transport);
-      setCuisineList(transportList);
+      setTransportList(transportList);
     }
     setToggle(toggle + 1);
   };
@@ -74,7 +74,7 @@ export default function Filter() {
       placesList.splice(index, 1);
     } else {
       placesList.push(place);
-      setCuisineList(placesList);
+      setPlacesList(placesList);
     }
     setToggle(toggle + 1);
   };
@@ -82,6 +82,8 @@ export default function Filter() {
   useEffect(() => {
     setPlacesList(placesList);
     setCuisineList(cuisineList);
+    setTransportList(transportList);
+    setTripTypeList(tripTypeList);
     setDays(days);
     setPeople(people);
   }, [days, people, toggle]);
