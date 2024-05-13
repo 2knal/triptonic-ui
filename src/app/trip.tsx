@@ -1,7 +1,7 @@
-import { View, Text, Animated, Easing, Image, ImageBackground, StyleSheet } from "react-native";
+import { View, Text, Image, ImageBackground, StyleSheet } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useCallback, useEffect, useRef, useState } from "react";
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { useEffect, useRef, useState } from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 import Filter from "@/components/filter";
 import NavBar from "@/components/utils/navbar";
@@ -13,7 +13,6 @@ import Loader from "@/components/loader";
 import CoolCallout from "@/components/utils/cool-callout";
 
 export default function Trip() {
-  const animationProgress = useRef(new Animated.Value(0));``
   const { fetchRoutes } = useAPIStore();
   const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,40 +20,37 @@ export default function Trip() {
   const mapRef = useRef<MapView>();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
+  const animatetoMarkers = () => {
+    if (!isLoading && mapRef.current && markers.length > 0) {
+      console.log('Animate to map location!');
+      mapRef.current.animateCamera({ center: markers[0], zoom: 12 }, { duration: 2500 })
+      // mapRef.current.fitToSuppliedMarkers(
+      //   markers.map(({ _id }) => _id),
+      //   { animated: true }
+      // );
+    }
+  }
+
   const handleOpenPress = (scrNo: number) => {
     bottomSheetRef.current?.present();
     setNavbarScr(scrNo);
   };
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(animationProgress.current, {
-        toValue: 1,
-        duration: 2000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start();
-  }, []);
 
 
   useEffect(() => {
     async function fetchDataFromAPI() {
       if (isLoading) {
         const routes = await fetchRoutes();
-        console.log('GOT EM ALL', routes);
         
         setMarkers(routes);
         setIsLoading(false);
       }
     }
     fetchDataFromAPI()
-  }, [isLoading]);
+  }, [isLoading, setMarkers]);
 
   useEffect(() => {
-    if (!isLoading && mapRef.current && markers.length > 0) {
-      mapRef.current.animateCamera({ center: markers[0], zoom: 12 }, { duration: 2000 })
-    }
+    animatetoMarkers();
   }, [isLoading, markers]);
 
   if (isLoading) {
@@ -67,6 +63,7 @@ export default function Trip() {
         ref={mapRef}
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
+        onMapLoaded={() => animatetoMarkers()}
       >
         {markers.map((marker, index) => (
           <Marker

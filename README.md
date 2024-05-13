@@ -32,6 +32,7 @@
 - [x] Add a toast notification library
 - [x] Add custom markers and callbacks
   - [ ] Add shadows to markers and callbacks
+  - [ ] Render image in callback, unable to do so
 
 ---
 
