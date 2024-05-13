@@ -1,4 +1,4 @@
-import { View, Text, Animated, Easing } from "react-native";
+import { View, Text, Animated, Easing, Image, ImageBackground, StyleSheet } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -10,6 +10,7 @@ import Map from "@/components/utils/map";
 import ActionSheet from "@/components/utils/action-sheet";
 import { useAPIStore } from "@/store";
 import Loader from "@/components/loader";
+import CoolCallout from "@/components/utils/cool-callout";
 
 export default function Trip() {
   const animationProgress = useRef(new Animated.Value(0));``
@@ -73,11 +74,13 @@ export default function Trip() {
             title={marker.name}
             coordinate={marker}
           >
-            <Callout>
-              <View style={{ padding: 5 }}>
-                <Text style={{ fontSize: 18 }}>{marker.name}</Text>
-              </View>
-            </Callout>
+            <View className="flex flex-1 bg-white w-8 h-8 p-1 rounded-lg drop-shadow-2xl">
+              <ImageBackground 
+                source={{ uri: marker.icon }} 
+                className="flex flex-1 w-full h-full"
+                resizeMode="contain" />
+            </View>
+            <CoolCallout marker={marker} />
           </Marker>
         ))}
       </MapView>
@@ -92,3 +95,15 @@ export default function Trip() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 10
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
+  }
+})

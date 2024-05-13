@@ -29,8 +29,9 @@
 - [x] Integrate a state management library like redux or zustand to pass data from one page to another instead of using AsyncStorage
 - [x] Handle trip page's navbar's absolute bottom positioning, why is it not the same as the landing page.
 - [x] Trip page buttons, on hover circular selection color around it.
-- [ ] Add a toast notification library
-- [ ] Add custom markers and callbacks
+- [x] Add a toast notification library
+- [x] Add custom markers and callbacks
+  - [ ] Add shadows to markers and callbacks
 
 ---
 
