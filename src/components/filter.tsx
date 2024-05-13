@@ -89,8 +89,10 @@ export default function Filter() {
   }, [days, people, toggle]);
 
   return (
-    <ScrollView className="flex flex-1 p-5" nestedScrollEnabled={true}>
-      <Heading title="Applied Filters" css="text-2xl pb-6" />
+    <ScrollView className="flex flex-1 p-6" nestedScrollEnabled={true}>
+      <View className="items-center">
+        <Heading title="Applied Filters" css="text-2xl pb-6" />
+      </View>
 
       <View className="flex-row justify-between">
         <CoolText title="Number of days" css="text-xl pb-2" />
@@ -120,6 +122,20 @@ export default function Filter() {
           maximumTrackTintColor="grey"
           onValueChange={(value) => setPeople(Math.round(value))}
         />
+      </View>
+
+      <CoolText title="Cuisine" css="text-xl pb-2" />
+      <View className="flex-row justify-around flex-wrap pb-8">
+        {allCuisine.map((value, i) => {
+          return (
+            <Pill
+              key={i}
+              title={value}
+              list={cuisineList}
+              onPress={() => onCuisineBtnPress(value)}
+            />
+          );
+        })}
       </View>
 
       <CoolText title="Tourist Attractions" css="text-xl pb-2" />
@@ -159,20 +175,6 @@ export default function Filter() {
               title={value}
               list={transportList}
               onPress={() => onTransportBtnPress(value)}
-            />
-          );
-        })}
-      </View>
-
-      <CoolText title="Cuisine" css="text-xl pb-2" />
-      <View className="flex-row justify-around flex-wrap pb-8">
-        {allCuisine.map((value, i) => {
-          return (
-            <Pill
-              key={i}
-              title={value}
-              list={cuisineList}
-              onPress={() => onCuisineBtnPress(value)}
             />
           );
         })}
