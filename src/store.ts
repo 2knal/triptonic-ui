@@ -8,9 +8,12 @@ type PromptStore = {
 }
 
 type APIStore = {
+  tripName: string;
   routes: any;
   fetchRoutes: () => any;
   getRoutes: () => any;
+  setTripName: (string) => any;
+  getTripName: () => string;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -19,6 +22,9 @@ export const usePromptStore = create<PromptStore>((set) => ({
 }));
 
 export const useAPIStore = create<APIStore>((set, get) => ({
+  tripName: '',
+  setTripName: (tripName) => (set({ tripName })),
+  getTripName: () => get().tripName,
   routes: [],
   fetchRoutes: async () => {
     const url = API_ENDPOINT + '/data.json';

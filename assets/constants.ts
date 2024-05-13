@@ -4,7 +4,7 @@ export const COLORS = {
   'sageish': '#9FD29D',
   'yellowy': '#FFD874',
   'bluei': '#AFE1F0',
-  'egg-white': '#F5ECE9',
+  'egg-white': '#FFF7F5',
   'cute-purple': '#EAD1FF',
   'reddish': '#FA796B',
   'darker-text': '#374259',

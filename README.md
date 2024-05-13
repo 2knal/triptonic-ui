@@ -35,7 +35,7 @@
   - [ ] Render image in callback, unable to do so
 - [x] Handle BottomSheet scroll
 - [ ] Handle trip-generation loader properly, there is some lag
-
+- [ ] onclick button color change
 ---
 
 ### Troubleshooting

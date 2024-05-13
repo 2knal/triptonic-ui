@@ -1,62 +1,29 @@
 import { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import Textarea from "../components/utils/textarea";
-import { Link } from "expo-router";
-import BackButton from "@/components/utils/back-button";
-import ForwardButton from "@/components/utils/forward-button";
+import { View, TextInput } from "react-native";
+import CoolText from "@/components/utils/cool-text";
+import NavButton from "@/components/utils/nav-button";
+import { COLORS } from "assets/constants";
+import { useAPIStore } from "@/store";
 
 export default function Save() {
-  const [text, onChangeText] = useState();
+  const { tripName, setTripName } = useAPIStore();
 
   return (
-    <View style={styles.container}>
-      <Link href="/trip" asChild>
-        <BackButton />
-      </Link>
-      <Text style={styles.normalText}>Every trip must have a cool name</Text>
+    <View className="bg-egg-white flex flex-1 justify-center items-center p-4">
+      <View className="absolute top-0 left-6">
+        <NavButton direction='left'/>
+      </View>
+      <CoolText title="Every trip must have a cool name!" css="text-2xl pb-4 color-darker-text" />
       <TextInput
-        style={styles.input}
-        placeholder="New York Trip!"
-        // onChangeText={onChangeText}
-        value={text}
+        className="font-rethink bg-white w-96 text-xl color-dark-text h-12 border-reddish border-2 rounded-full text-center"
+        placeholder="It's Vegas baby!"
+        onChangeText={(t) => setTripName(t)}
+        value={tripName}
+        selectionColor={COLORS['sageish']}
       ></TextInput>
-      <Link href="/trip" asChild>
-        <ForwardButton />
-      </Link>
+      <View className="absolute bottom-6 right-6">
+        <NavButton direction='right' nextPath='/share' />
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FEF4D9",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  normalText: {
-    fontSize: 20,
-    padding: 5,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "grey",
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 25,
-    elevation: 3,
-    width: 300,
-    textAlign: "center",
-    borderColor: "#EC988D",
-    color: "grey",
-  },
-});
