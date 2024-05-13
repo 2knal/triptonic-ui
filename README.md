@@ -33,6 +33,8 @@
 - [x] Add custom markers and callbacks
   - [ ] Add shadows to markers and callbacks
   - [ ] Render image in callback, unable to do so
+- [x] Handle BottomSheet scroll
+- [ ] Handle trip-generation loader properly, there is some lag
 
 ---
 

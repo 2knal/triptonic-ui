@@ -1,3 +1,4 @@
+import { COLORS } from 'assets/constants';
 import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
 
@@ -8,15 +9,16 @@ interface IButtonProps {
 }
 
 export default function Pill(props: IButtonProps) {
-  const {onPress, title, list} = props;
+  const { onPress, title, list } = props;
 
   const selected = list.includes(title);
   const extStyle = selected ? styles.selected: styles.nothing;
-  const extText = selected ? {color: 'white'}: styles.nothing;
+  const extText = selected ? { color: 'white' }: styles.nothing;
 
   return (
-    <Pressable style={[styles.button, extStyle]} onPress={onPress}>
-      <Text style={[styles.text, extText]}>{title}</Text>
+    <Pressable style={[styles.button, extStyle]} onPress={onPress}
+    className="w-32 flex items-center justify-center px-4 py-3 border-reddish">
+      <Text style={[styles.text, extText]} className="color-reddish">{title}</Text>
     </Pressable>
   );
 }
@@ -30,21 +32,22 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
     borderRadius: 40,
-    elevation: 3,
+    // elevation: 3,
     backgroundColor: 'white',
     textAlign: 'center',
     borderWidth: 1,
-    borderColor: '#EC988D'
+    borderColor: COLORS['reddish'],
+    // width: 100,
   },
   nothing: {},
   selected: {
-    backgroundColor: '#EC988D'
+    backgroundColor: COLORS['reddish']
   },
   text: {
     fontSize: 14,
     lineHeight: 15,
     fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: '#EC988D'
+    color: COLORS['reddish']
   },
 });

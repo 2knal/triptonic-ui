@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo, forwardRef, useCallback } from 'react';
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 
 interface IActionSheetProps {
@@ -12,7 +12,7 @@ type Ref = BottomSheetModal;
 
 
 const ActionSheet = forwardRef<Ref, IActionSheetProps>((props, ref) => {
-  const snapPoints = useMemo(() => ['72%', '90%'], []);
+  const snapPoints = useMemo(() => ['75%', '100%'], []);
   const renderBackdrop = useCallback(
 		(props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
 		[]
@@ -25,10 +25,14 @@ const ActionSheet = forwardRef<Ref, IActionSheetProps>((props, ref) => {
         index={props.index}
         snapPoints={snapPoints}
         enablePanDownToClose={true}
+        enableContentPanningGesture={false}
         backdropComponent={renderBackdrop}
         onChange={props.handleSheetChanges}
       >
-        {props.children}
+        <BottomSheetScrollView contentContainerClassName="flex flex-1 h-full"
+        contentContainerStyle={{ flexGrow: 1 }}>
+          {props.children}
+        </BottomSheetScrollView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );

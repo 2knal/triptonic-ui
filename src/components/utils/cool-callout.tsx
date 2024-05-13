@@ -23,8 +23,10 @@ export default function CoolCallout({ marker }: ICoolCallout) {
   // console.log(imageUri);
 
   return (
+    <View className="flex flex-1 pb-2">
     <Callout tooltip={true}>
-      <View className="flex flex-1 bg-white w-64 h-48 p-2 rounded-lg drop-shadow-2xl">
+      <View className="flex flex-1 bg-white w-64 h-48 p-2 rounded-lg drop-shadow-2xl"
+      style={{ elevation: 100 }}>
         <CoolText title={marker.name} />
         {/* <View>
           <WebView style={{ height: 100, width: 230 }} source={{ uri: imageUri }} /> 
@@ -36,5 +38,6 @@ export default function CoolCallout({ marker }: ICoolCallout) {
           onError={(error) => console.log("Error loading image:", error)} /> */}
       </View>
     </Callout>
+    </View>
   );
 }

@@ -43,14 +43,6 @@ export default function Prompt() {
           textCss="color-white"
           text={"Generate"}
         />
-          {/* <Pressable
-            className="flex items-center justify-center px-4 py-3 rounded-full bg-sageish w-48"
-            onPress={generateTrip}
-          >
-            <Text className="font-rethink text-2xl color-white">
-              Generate!
-            </Text>
-          </Pressable> */}
       </View>
     </View>
   );

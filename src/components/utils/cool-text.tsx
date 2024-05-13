@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 
 interface ICoolText {
-  title: string;
+  title: any;
   css?: string;
 }
 

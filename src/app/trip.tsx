@@ -16,6 +16,7 @@ export default function Trip() {
   const { fetchRoutes } = useAPIStore();
   const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [navbarScr, setNavbarScr] = useState(1);
   const mapRef = useRef<MapView>();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -53,7 +54,8 @@ export default function Trip() {
     animatetoMarkers();
   }, [isLoading, markers]);
 
-  if (isLoading) {
+  if (isLoading && (!mapLoaded)) {
+    console.log('Loader rendered');
     return <Loader />;;
   }
 
@@ -63,7 +65,10 @@ export default function Trip() {
         ref={mapRef}
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
-        onMapLoaded={() => animatetoMarkers()}
+        onMapLoaded={() => {
+          animatetoMarkers();
+          setMapLoaded(true);
+        }}
       >
         {markers.map((marker, index) => (
           <Marker
@@ -71,7 +76,8 @@ export default function Trip() {
             title={marker.name}
             coordinate={marker}
           >
-            <View className="flex flex-1 bg-white w-8 h-8 p-1 rounded-lg drop-shadow-2xl">
+            <View className="flex flex-1 bg-white w-8 h-8 p-1 rounded-lg drop-shadow-2xl"
+            style={{ elevation: 3 }}>
               <ImageBackground 
                 source={{ uri: marker.icon }} 
                 className="flex flex-1 w-full h-full"
