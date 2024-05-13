@@ -13,6 +13,7 @@ import Loader from "@/components/loader";
 import CoolCallout from "@/components/utils/cool-callout";
 import { COLORS } from "assets/constants";
 import MapViewDirections from "react-native-maps-directions";
+import CoolText from "@/components/utils/cool-text";
 
 export default function Trip() {
   const { fetchRoutes } = useAPIStore();
@@ -78,14 +79,15 @@ export default function Trip() {
         {markers.map((marker, index) => (
           <Marker key={index} title={marker.name} coordinate={marker}>
             <View
-              className="flex flex-1 bg-white w-8 h-8 p-1 rounded-lg drop-shadow-2xl"
+              className="flex flex-1 w-8 h-8 p-1 justify-center items-center rounded-full bg-reddish drop-shadow-2xl text-center"
               style={{ elevation: 3 }}
             >
-              <ImageBackground
+              {/* <ImageBackground
                 source={{ uri: marker.icon }}
                 className="flex flex-1 w-full h-full"
                 resizeMode="contain"
-              />
+              /> */}
+              <CoolText title={index + 1} css="font-bold color-white" />
             </View>
             <CoolCallout marker={marker} />
           </Marker>
