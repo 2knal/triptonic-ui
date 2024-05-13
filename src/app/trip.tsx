@@ -1,7 +1,7 @@
 import { View, Text, Image, ImageBackground, StyleSheet } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useEffect, useRef, useState } from "react";
-import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 
 import Filter from "@/components/filter";
 import NavBar from "@/components/utils/navbar";
@@ -11,6 +11,8 @@ import ActionSheet from "@/components/utils/action-sheet";
 import { useAPIStore } from "@/store";
 import Loader from "@/components/loader";
 import CoolCallout from "@/components/utils/cool-callout";
+import { COLORS } from "assets/constants";
+import MapViewDirections from "react-native-maps-directions";
 
 export default function Trip() {
   const { fetchRoutes } = useAPIStore();
@@ -20,6 +22,7 @@ export default function Trip() {
   const [navbarScr, setNavbarScr] = useState(1);
   const mapRef = useRef<MapView>();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const googleMapsAPIKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   const animatetoMarkers = () => {
     if (!isLoading && mapRef.current && markers.length > 0) {
@@ -87,6 +90,19 @@ export default function Trip() {
             <CoolCallout marker={marker} />
           </Marker>
         ))}
+        {/* <Polyline
+          coordinates={markers}
+          strokeWidth={4}
+          strokeColor={COLORS['reddish']}
+        /> */}
+        <MapViewDirections
+          origin={markers[0]}
+          destination={markers[markers.length - 1]}
+          waypoints={markers.slice(1, -1)}
+          apikey={googleMapsAPIKey}
+          strokeWidth={4}
+          strokeColor={COLORS['reddish']}
+        />
       </MapView>
       <View className="absolute bottom-14 self-center">
         <NavBar onPress={handleOpenPress} optionNo={navbarScr} />

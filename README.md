@@ -36,6 +36,7 @@
 - [x] Handle BottomSheet scroll
 - [ ] Handle trip-generation loader properly, there is some lag
 - [ ] onclick button color change
+- [ ] Show marker as probably numbered circles with on hover info about the place in a callout
 ---
 
 ### Troubleshooting
