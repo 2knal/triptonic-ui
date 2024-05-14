@@ -8,85 +8,84 @@ import Pill from "@/components/utils/pill";
 import Heading from "@/components/utils/heading";
 import CoolText from "@/components/utils/cool-text";
 import { COLORS } from "assets/constants";
+import { useAPIStore } from "@/store";
+import { capitalizeFirstLetter, IPromptParams } from "@/utils";
+import { router } from "expo-router";
 
 export default function Filter() {
+  const params = useAPIStore((state) => state.params);
+  console.log('FILTER received', params);
   const { close: closePrompt } = useBottomSheet();
 
   const allCuisine = [
-    "Italian",
-    "Indian",
-    "Japanese",
-    "Mexican",
-    "French",
-    "Chinese",
-    "Korean",
-    "Thai",
-    "Greek"
+    "italian",
+    "indian",
+    "japanese",
+    "mexican",
+    "french",
+    "chinese",
+    "korean",
+    "thai",
+    "greek"
   ];
-  
-  const allPlaces = ["Park", "Museums", "Clubs"];
-  const allTripTypes = ["Family", "Friends", "Couple"];
-  const modeOfTransport = ["Car", "Train", "Bus", "Plane"];
-  const [cuisineList, setCuisineList] = useState([]);
-  const [placesList, setPlacesList] = useState([]);
-  const [tripTypeList, setTripTypeList] = useState([]);
-  const [transportList, setTransportList] = useState([]);
-  const [days, setDays] = useState(0);
-  const [people, setPeople] = useState(0);
-  const [toggle, setToggle] = useState(0);
+  const allPlaces = ["park", "museums", "clubs"];
+  const allTripTypes = ["family", "friends", "couple"];
+  const modeOfTransport = ["car", "train", "bus", "plane"];
+  const [cuisineList, setCuisineList] = useState(params?.cuisine ? params.cuisine.split('|') : []);
+  const [placesList, setPlacesList] = useState(params?.attractions ? params.attractions.split('|') : []);
+  const [tripTypeList, setTripTypeList] = useState(params?.type_of_trip ? params.type_of_trip.split('|') : ['friends']);
+  const [transportList, setTransportList] = useState(params?.mode_of_transport ? params.mode_of_transport.split('|') : ['car']);
+  const [days, setDays] = useState(1);
+  const [people, setPeople] = useState(4);
 
   const onCuisineBtnPress = (cuisine: string) => {
     if (cuisineList.includes(cuisine)) {
-      const index = cuisineList.indexOf(cuisine);
-      cuisineList.splice(index, 1);
-    } else {
-      cuisineList.push(cuisine);
-      setCuisineList(cuisineList);
+      setCuisineList(prev => prev.filter(p => p !== cuisine));
+    } else if (cuisine !== '') {
+      setCuisineList(prev => [...prev, cuisine])
     }
-    setToggle(toggle + 1);
+    console.log(cuisine, cuisineList);
   };
 
   const onTripTypeBtnPress = (tripType: string) => {
     if (tripTypeList.includes(tripType)) {
-      const index = tripTypeList.indexOf(tripType);
-      tripTypeList.splice(index, 1);
-    } else {
-      tripTypeList.push(tripType);
-      setTripTypeList(tripTypeList);
+      setTripTypeList(prev => prev.filter(p => p !== tripType));
+    } else if (tripType !== '') {
+      setTripTypeList(prev => [...prev, tripType])
     }
-    setToggle(toggle + 1);
   };
 
   const onTransportBtnPress = (transport: string) => {
+    console.log(transport, transportList);
     if (transportList.includes(transport)) {
       const index = transportList.indexOf(transport);
       transportList.splice(index, 1);
-    } else {
-      transportList.push(transport);
-      setTransportList(transportList);
+    } else if (transport !== '') {
+      setTransportList([ ...transportList, transport ]);
     }
-    setToggle(toggle + 1);
   };
 
   const onPlacesBtnPress = (place: string) => {
     if (placesList.includes(place)) {
       const index = placesList.indexOf(place);
       placesList.splice(index, 1);
-    } else {
-      placesList.push(place);
-      setPlacesList(placesList);
+    } else if (place !== '') {
+      setPlacesList([ ...placesList, place ]);
     }
-    setToggle(toggle + 1);
   };
 
-  useEffect(() => {
-    setPlacesList(placesList);
-    setCuisineList(cuisineList);
-    setTransportList(transportList);
-    setTripTypeList(tripTypeList);
-    setDays(days);
-    setPeople(people);
-  }, [days, people, toggle]);
+  const handleFilterApply = () => {
+    const sendParams: IPromptParams = {
+      location: params.location,
+      duration: days,
+      cuisine: cuisineList.join('|'),
+      mode_of_transport: transportList.join('|'),
+      type_of_trip: tripTypeList.join('|'),
+      no_of_people: people,
+      attractions: placesList.join('|'),
+    }
+    router.push({ pathname: '/trip' , params: { ...sendParams }});
+  };
 
   return (
     <ScrollView className="flex flex-1 p-6" nestedScrollEnabled={true}>
@@ -116,7 +115,7 @@ export default function Filter() {
       <View className="flex pb-4">
         <Slider
           minimumValue={0}
-          maximumValue={100}
+          maximumValue={20}
           minimumTrackTintColor={COLORS['reddish']}
           thumbTintColor={COLORS['sageish']}
           maximumTrackTintColor="grey"
@@ -130,7 +129,7 @@ export default function Filter() {
           return (
             <Pill
               key={i}
-              title={value}
+              title={capitalizeFirstLetter(value)}
               list={cuisineList}
               onPress={() => onCuisineBtnPress(value)}
             />
@@ -144,7 +143,7 @@ export default function Filter() {
           return (
             <Pill
               key={i}
-              title={value}
+              title={capitalizeFirstLetter(value)}
               list={placesList}
               onPress={() => onPlacesBtnPress(value)}
             />
@@ -158,7 +157,7 @@ export default function Filter() {
           return (
             <Pill
               key={i}
-              title={value}
+              title={capitalizeFirstLetter(value)}
               list={tripTypeList}
               onPress={() => onTripTypeBtnPress(value)}
             />
@@ -172,7 +171,7 @@ export default function Filter() {
           return (
             <Pill
               key={i}
-              title={value}
+              title={capitalizeFirstLetter(value)}
               list={transportList}
               onPress={() => onTransportBtnPress(value)}
             />
@@ -188,7 +187,7 @@ export default function Filter() {
           text={"Cancel"}
         />
         <CoolButton
-          onPress={() => {}}
+          onPress={handleFilterApply}
           buttonCss="w-48 bg-sageish"
           textCss="color-white"
           text={"Apply"}

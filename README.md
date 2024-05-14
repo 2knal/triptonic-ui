@@ -41,6 +41,11 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [ ] Handle trip-generation loader properly, there is some lag
 - [ ] onclick button color change
 - [x] Show marker as probably numbered circles with on hover info about the place in a callout
+- [ ] Draggable timeline view with a dialog box to add custom locations to the trip
+- [ ] Send proper defaults from backend API route for each prompt params
+- [ ] For food-stuff send me proper cuisine, and not the food as cuisine
+- [ ] Handle multiple values for individual params
+- [ ] Day wise split, UI changes
 ---
 
 ### Troubleshooting

@@ -15,11 +15,12 @@ import { COLORS } from "assets/constants";
 import MapViewDirections from "react-native-maps-directions";
 import CoolText from "@/components/utils/cool-text";
 import { useToast } from "react-native-toast-notifications";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 export default function Trip() {
+  const params = useLocalSearchParams();
   const { prompt } = usePromptStore();
-  const { fetchRoutes } = useAPIStore();
+  const { fetchRoutes, fetchRoutesWithParams } = useAPIStore();
   const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -51,9 +52,14 @@ export default function Trip() {
 
   useEffect(() => {
     async function fetchDataFromAPI() {
+
       if (isLoading) {
         console.log('Sending prompt...', prompt);
-        const data = await fetchRoutes(prompt);
+        console.log('Sending params (if any)', params)
+        const data = (Object.keys(params).length !== 0) 
+          ? await fetchRoutesWithParams(params) 
+          : await fetchRoutes(prompt);
+
         if ('error' in data) {
           toast.show("Something went wrong. Please try again later :(", {
             type: 'danger'

@@ -11,7 +11,7 @@ interface IButtonProps {
 export default function Pill(props: IButtonProps) {
   const { onPress, title, list } = props;
 
-  const selected = list.includes(title);
+  const selected = list.includes(title.toLowerCase());
   const extStyle = selected ? styles.selected: styles.nothing;
   const extText = selected ? { color: 'white' }: styles.nothing;
 
