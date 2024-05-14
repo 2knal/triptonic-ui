@@ -24,22 +24,22 @@ export default function Prompt() {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex flex-1 p-6">
       <Textarea
         placeholder="Enter Trip prompt..."
         text={prompt}
         onChangeText={(t: string) => changePrompt(t)}
       />
-      <View style={styles.row}>
+      <View className="gap-6 flex-row self-center pb-24">
         <CoolButton
           onPress={closePrompt}
-          buttonCss="bg-bluei w-48"
+          buttonCss="w-48 bg-bluei"
           textCss="color-white"
           text={"Cancel"}
         />
         <CoolButton
           onPress={generateTrip}
-          buttonCss="bg-sageish w-48"
+          buttonCss="w-48 bg-sageish"
           textCss="color-white"
           text={"Generate"}
         />
@@ -48,16 +48,3 @@ export default function Prompt() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#1E1E1E",
-    padding: 20,
-  },
-  row: {
-    flexDirection: "row",
-    gap: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

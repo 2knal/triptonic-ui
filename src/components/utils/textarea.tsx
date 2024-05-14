@@ -1,3 +1,4 @@
+import { COLORS } from 'assets/constants';
 import React from 'react';
 import { TextInput } from 'react-native';
 
@@ -15,6 +16,7 @@ const Textarea: React.FC<ITextareaProps> = ({ text, onChangeText, placeholder })
       onChangeText={onChangeText}
       style={{ height: '85%', textAlignVertical: 'top' }}
       className='font-rethink text-xl'
+      selectionColor={COLORS['sageish']}
       value={text}/>
   );
 }

@@ -180,16 +180,16 @@ export default function Filter() {
         })}
       </View>
 
-      <View className="gap-20 flex-row self-center pb-24">
+      <View className="gap-6 flex-row self-center pb-24">
         <CoolButton
           onPress={closePrompt}
-          buttonCss="bg-bluei w-40"
+          buttonCss="w-48 bg-bluei"
           textCss="color-white"
           text={"Cancel"}
         />
         <CoolButton
           onPress={() => {}}
-          buttonCss="bg-sageish w-40"
+          buttonCss="w-48 bg-sageish"
           textCss="color-white"
           text={"Apply"}
         />

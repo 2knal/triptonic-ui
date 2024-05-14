@@ -16,7 +16,7 @@ export default function Index() {
       <View className="absolute bottom-14 self-center">
         <CoolButton
           onPress={() => bottomSheetRef.current?.present()}
-          buttonCss="bg-reddish w-80"
+          buttonCss="w-80 bg-reddish"
           textCss="color-egg-white"
           text={"Let's plan!"} />
         </View>
