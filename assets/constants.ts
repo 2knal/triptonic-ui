@@ -23,5 +23,3 @@ export const INITIAL_MAP_LOCATION = {
   longitudeDelta: 0.583829730749116
 };
 
-// API endpoint
-export const API_ENDPOINT = 'https://gauravghati.github.io/apis'

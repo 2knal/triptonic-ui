@@ -7,6 +7,10 @@
 - npm install
 - npm start
 (Ensure Expo go app is installed on your phone to check for testing mobile app)
+- Have a .env ready in src/ directory with below content
+EXPO_PUBLIC_API_URL=<FLASK_REST_API_URL>
+EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
+
 
 ---
 

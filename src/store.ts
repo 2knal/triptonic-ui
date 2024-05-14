@@ -1,16 +1,26 @@
 import { create } from "zustand";
 
-import { API_ENDPOINT } from "assets/constants";
+interface IPromptParams {
+  location: string;
+  duration?: number;
+  no_of_people?: number;
+  mode_of_transport?: string;
+  type_of_trip?: string;
+  cuisine?: string;
+  attractions?: string;
+}
 
 type PromptStore = {
   prompt: string;
+  params: IPromptParams;
   changePrompt: (string) => void;
+  setParams: (IPromptParams) => void;
 }
 
 type APIStore = {
   tripName: string;
   routes: any;
-  fetchRoutes: () => any;
+  fetchRoutes: (string) => any;
   getRoutes: () => any;
   setTripName: (string) => any;
   getTripName: () => string;
@@ -18,20 +28,35 @@ type APIStore = {
 
 export const usePromptStore = create<PromptStore>((set) => ({
   prompt: '',
-  changePrompt: (prompt) => set({ prompt })
+  params: {
+    location: ''
+  },
+  changePrompt: (prompt) => set({ prompt }),
+  setParams: (params) => set({ params })
 }));
 
 export const useAPIStore = create<APIStore>((set, get) => ({
   tripName: '',
-  setTripName: (tripName) => (set({ tripName })),
-  getTripName: () => get().tripName,
   routes: [],
-  fetchRoutes: async () => {
-    const url = API_ENDPOINT + '/data.json';
-    const response = await fetch(url);
-    const updatedResponse = await response.json();
-    set({ routes: updatedResponse });
-    return updatedResponse;
+  fetchRoutes: async (prompt: string) => {
+    const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
+    const url = API_ENDPOINT + '/prompt';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+      });
+      const updatedResponse = await response.json();
+      set({ routes: updatedResponse });
+      return updatedResponse;
+    } catch (e) {
+      return { 'error': true };
+    }
   },
   getRoutes: () => get().routes,
+  setTripName: (tripName) => (set({ tripName })),
+  getTripName: () => get().tripName,
 }));

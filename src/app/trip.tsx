@@ -8,14 +8,17 @@ import NavBar from "@/components/utils/navbar";
 import Prompt from "@/components/prompt";
 import Map from "@/components/utils/map";
 import ActionSheet from "@/components/utils/action-sheet";
-import { useAPIStore } from "@/store";
+import { useAPIStore, usePromptStore } from "@/store";
 import Loader from "@/components/loader";
 import CoolCallout from "@/components/utils/cool-callout";
 import { COLORS } from "assets/constants";
 import MapViewDirections from "react-native-maps-directions";
 import CoolText from "@/components/utils/cool-text";
+import { useToast } from "react-native-toast-notifications";
+import { useRouter } from "expo-router";
 
 export default function Trip() {
+  const { prompt } = usePromptStore();
   const { fetchRoutes } = useAPIStore();
   const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +27,8 @@ export default function Trip() {
   const mapRef = useRef<MapView>();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const googleMapsAPIKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const toast = useToast();
+  const router = useRouter();
 
   const animatetoMarkers = () => {
     if (!isLoading && mapRef.current && markers.length > 0) {
@@ -47,9 +52,18 @@ export default function Trip() {
   useEffect(() => {
     async function fetchDataFromAPI() {
       if (isLoading) {
-        const routes = await fetchRoutes();
+        console.log('Sending prompt...', prompt);
+        const data = await fetchRoutes(prompt);
+        if ('error' in data) {
+          toast.show("Something went wrong. Please try again later :(", {
+            type: 'danger'
+          });
+          router.push({ pathname: '/' });
+          return;
+        }
+        console.log('GOT EM ALL', data);
 
-        setMarkers(routes);
+        setMarkers(data);
         setIsLoading(false);
       }
     }
