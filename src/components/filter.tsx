@@ -99,6 +99,7 @@ export default function Filter() {
       </View>
       <View className="flex pb-4">
         <Slider
+          value={days}
           minimumValue={0}
           maximumValue={100}
           minimumTrackTintColor={COLORS['reddish']}
@@ -114,6 +115,7 @@ export default function Filter() {
       </View>
       <View className="flex pb-4">
         <Slider
+          value={people}
           minimumValue={0}
           maximumValue={20}
           minimumTrackTintColor={COLORS['reddish']}
