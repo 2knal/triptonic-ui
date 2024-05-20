@@ -33,40 +33,46 @@ export const useAPIStore = create<APIStore>((set, get) => ({
   fetchRoutes: async (p: string) => {
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
-    const url = API_ENDPOINT + '/prompt';
+    // const url = API_ENDPOINT + '/prompt';
+    const url = 'https://gauravghati.github.io/apis/data.json';
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ prompt: p })
-      });
+      // const response = await fetch(url, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({ ...p })
+      // });
+      const response = await fetch(url);
+      console.log('API DATA', response);
       const updatedResponse = await response.json();
-      const { places, prompt } = updatedResponse;
+      const { places, params } = updatedResponse;
       set({ routes: places });
-      set({ params: prompt });
+      set({ params });
       return places;
     } catch (e) {
+      console.log(e);
       return { 'error': true };
     }
   },
   fetchRoutesWithParams: async (p: any) => {
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
-    const url = API_ENDPOINT + '/apply_filters';
+    // const url = API_ENDPOINT + '/apply_filters';
+    const url = 'https://gauravghati.github.io/apis/data.json';
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ...p })
-      });
+      // const response = await fetch(url, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({ ...p })
+      // });
+      const response = await fetch(url);
       const updatedResponse = await response.json();
-      const { places, prompt } = updatedResponse;
+      const { places, params } = updatedResponse;
       set({ routes: places });
-      set({ params: prompt });
+      set({ params });
       return places;
     } catch (e) {
       return { 'error': true };

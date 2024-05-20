@@ -27,6 +27,11 @@ export default function NavBar(props: INavBarProps) {
           optionSelectedCss={optionNo === 2 ? 'bg-egg-white' : ''}
           optionNo={1}
           fontName={"sliders"} color={optionNo === 2 ? COLORS["reddish"] : COLORS["egg-white"]} />
+        <NavBarIcon
+          onPress={() => onPress(3)}
+          optionSelectedCss={optionNo === 3 ? 'bg-egg-white' : ''}
+          optionNo={1}
+          fontName={"map"} color={optionNo === 3 ? COLORS["reddish"] : COLORS["egg-white"]} />
         <Pressable
           className='rounded-full w-12 h-12 justify-center items-center'
           onPress={() => {}}>

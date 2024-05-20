@@ -18,7 +18,7 @@ export default function Pill(props: IButtonProps) {
   return (
     <Pressable style={[styles.button, extStyle]} onPress={onPress}
     className="w-32 flex items-center justify-center px-4 py-3 border-reddish">
-      <Text style={[styles.text, extText]} className="color-reddish">{title}</Text>
+      <Text style={[styles.text, extText]} className="color-reddish font-rethink">{title}</Text>
     </Pressable>
   );
 }

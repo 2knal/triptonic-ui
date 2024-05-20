@@ -16,6 +16,7 @@ import MapViewDirections from "react-native-maps-directions";
 import CoolText from "@/components/utils/cool-text";
 import { useToast } from "react-native-toast-notifications";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import MapTimeline from "@/components/map-timeline";
 
 export default function Trip() {
   const params = useLocalSearchParams();
@@ -80,6 +81,12 @@ export default function Trip() {
     animatetoMarkers();
   }, [isLoading, markers]);
 
+  function loadBottomSheetComponent(screenNo: number) {
+    if (screenNo === 1) return <Prompt />;
+    if (screenNo === 2) return <Filter />;
+    return <MapTimeline />;
+  }
+
   if (isLoading && !mapLoaded) {
     console.log("Loader rendered");
     return <Loader />;
@@ -132,7 +139,7 @@ export default function Trip() {
       <ActionSheet
         ref={bottomSheetRef}
         index={0}
-        children={navbarScr == 1 ? <Prompt /> : <Filter />}
+        children={loadBottomSheetComponent(navbarScr)}
       />
     </View>
   );
