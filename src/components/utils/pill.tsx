@@ -32,12 +32,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
     borderRadius: 40,
-    // elevation: 3,
     backgroundColor: 'white',
     textAlign: 'center',
     borderWidth: 1,
     borderColor: COLORS['reddish'],
-    // width: 100,
   },
   nothing: {},
   selected: {
@@ -48,6 +46,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: COLORS['reddish']
+    color: COLORS['reddish'],
+    fontFamily: 'rethink'
   },
 });

@@ -39,13 +39,15 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
   - [ ] Render image in callback, unable to do so
 - [x] Handle BottomSheet scroll
 - [ ] Handle trip-generation loader properly, there is some lag
-- [ ] onclick button color change
+- [x] onclick button color change
 - [x] Show marker as probably numbered circles with on hover info about the place in a callout
-- [ ] Draggable timeline view with a dialog box to add custom locations to the trip
+- [x] arrow up/down for timeline items
+  - [ ] Timeline items animation
 - [ ] Send proper defaults from backend API route for each prompt params
 - [ ] For food-stuff send me proper cuisine, and not the food as cuisine
 - [ ] Handle multiple values for individual params
-- [ ] Day wise split, UI changes
+- [x] Day wise split, UI changes
+- [ ] Handle back navigation re-request to backend API
 ---
 
 ### Troubleshooting

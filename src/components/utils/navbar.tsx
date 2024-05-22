@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import { View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { COLORS } from "assets/constants";
 import NavBarIcon from "@/components/utils/navbar-icon";
 
@@ -13,10 +13,11 @@ interface INavBarProps {
 
 export default function NavBar(props: INavBarProps) {
   const { onPress, optionNo } = props;
+  const router = useRouter();
 
   return (
     <View className="flex justify-center">
-      <View className="bg-reddish w-64 py-4 rounded-full flex flex-row justify-around">
+      <View className="bg-reddish w-72 py-3 rounded-full flex flex-row justify-around">
         <NavBarIcon
           onPress={() => onPress(1)}
           optionSelectedCss={optionNo === 1 ? 'bg-egg-white' : ''}
@@ -25,20 +26,21 @@ export default function NavBar(props: INavBarProps) {
         <NavBarIcon
           onPress={() => onPress(2)}
           optionSelectedCss={optionNo === 2 ? 'bg-egg-white' : ''}
-          optionNo={1}
+          optionNo={2}
           fontName={"sliders"} color={optionNo === 2 ? COLORS["reddish"] : COLORS["egg-white"]} />
         <NavBarIcon
           onPress={() => onPress(3)}
           optionSelectedCss={optionNo === 3 ? 'bg-egg-white' : ''}
-          optionNo={1}
+          optionNo={3}
           fontName={"map"} color={optionNo === 3 ? COLORS["reddish"] : COLORS["egg-white"]} />
-        <Pressable
-          className='rounded-full w-12 h-12 justify-center items-center'
-          onPress={() => {}}>
-          <Link href="/save" asChild>
-            <FontAwesome name="floppy-o" color={COLORS["egg-white"]} size={24} />
-          </Link>
-        </Pressable>
+        <NavBarIcon
+          onPress={() => {
+            onPress(4);
+            router.push({ pathname: '/save' });
+          }}
+          optionSelectedCss={optionNo === 4 ? 'bg-egg-white' : ''}
+          optionNo={4}
+          fontName={"floppy-o"} color={optionNo === 4 ? COLORS["reddish"] : COLORS["egg-white"]} />
       </View>
     </View>
   );

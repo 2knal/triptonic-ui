@@ -68,7 +68,7 @@ export default function Trip() {
           router.push({ pathname: '/' });
           return;
         }
-        console.log('GOT EM ALL', data);
+        // console.log('GOT EM ALL', data);
 
         setMarkers(data);
         setIsLoading(false);

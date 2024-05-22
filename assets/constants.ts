@@ -9,6 +9,9 @@ export const COLORS = {
   'reddish': '#FA796B',
   'darker-text': '#374259',
   'dark-text': '#545B77',
+  'gray': '#9CA3AF',
+  'gray-light': '#C4C4C4',
+  'white': '#FFFFFF'
 }
 
 export const TRIP = {
