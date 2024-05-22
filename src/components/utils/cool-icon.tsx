@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { COLORS } from "assets/constants";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 interface ICoolIconProps {
   iconName: any;
@@ -15,8 +15,8 @@ export default function CoolIcon({ iconName, color, css, onPress }: ICoolIconPro
   }
 
   return (
-    <Pressable onPress={onPress} className={"rounded-full w-12 h-12 justify-center items-center " + css}>
-      <FontAwesome name={iconName} color={color} size={24} className="color-reddish" />
-    </Pressable>
+    <TouchableOpacity onPress={onPress} className={"rounded-full w-12 h-12 justify-center items-center " + css}>
+      <FontAwesome name={iconName} color={color} size={20} className="color-reddish" />
+    </TouchableOpacity>
   );
 }

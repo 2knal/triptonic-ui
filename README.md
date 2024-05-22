@@ -43,6 +43,7 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] Show marker as probably numbered circles with on hover info about the place in a callout
 - [x] arrow up/down for timeline items
   - [ ] Timeline items animation
+  - [ ] Rotate settings gear icon
 - [ ] Send proper defaults from backend API route for each prompt params
 - [ ] For food-stuff send me proper cuisine, and not the food as cuisine
 - [ ] Handle multiple values for individual params

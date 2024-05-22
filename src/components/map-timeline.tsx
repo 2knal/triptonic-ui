@@ -5,6 +5,7 @@ import { ScrollView } from "react-native";
 import Heading from "./utils/heading";
 import { useState, useCallback } from "react";
 import CoolIcon from "./utils/cool-icon";
+import Settings from "./utils/settings";
 
 export default function MapTimeline() {
   const { routes } = useAPIStore();
@@ -63,7 +64,18 @@ function Day({ day, routes }) {
       }
     },
     [setData, data]
-  )
+  );
+
+  const handleDelete = useCallback(
+    (index) => {
+      const prevState = [...data];
+      if (index >= 0 && index < prevState.length) {
+        prevState.splice(index, 1);
+        setData(prevState);
+      }
+    },
+    [setData, data]
+  );
 
   return (
     <View>
@@ -77,6 +89,7 @@ function Day({ day, routes }) {
             isFirst={index === 0}
             handleMoveUp={handleMoveUp}
             handleMoveDown={handleMoveDown}
+            handleDelete={handleDelete}
             isLast={index === data.length - 1}/>
         ))}
       </View>
@@ -84,23 +97,25 @@ function Day({ day, routes }) {
   );
 }
 
-function TimelineItem({ index, route, isFirst, isLast, handleMoveUp, handleMoveDown }) {
+function TimelineItem({ index, route, isFirst, isLast, handleMoveUp, handleMoveDown, handleDelete }) {
   const { title, description, time } = route;
   const borderStyle = isLast ? '' : 'border-l-2';
+
   return (
     <View className={"relative pl-6 border-sageish pb-2 " + borderStyle}>
       <View className="absolute top-0 left-0 w-5 h-5 bg-reddish rounded-full -translate-y-1/2 -translate-x-1/2" />
       <CoolText title={time} css="color-gray pb-2" />
       <Heading title={title} css="text-lg pb-1" />
       <CoolText title={description} css="pb-4" />
-      {!isFirst && <CoolIcon onPress={() => {
-        handleMoveUp(index);
-        console.log(index, route);
-      }} iconName={'arrow-up'} css={'-translate-y-1/4 absolute top-0 right-10'} />}
-      {!isLast && <CoolIcon onPress={() => {
-        handleMoveDown(index);
-        console.log(index, route);
-      }} iconName={'arrow-down'} css={'-translate-y-1/4 absolute top-0 right-0'} />}
+      <View className="-translate-y-1/4 absolute top-0 right-0">
+        <Settings
+          isFirst={isFirst}
+          isLast={isLast}
+          handleUp={() => handleMoveUp(index)} 
+          handleDown={() => handleMoveDown(index)} 
+          handleEdit={undefined} 
+          handleDelete={() => handleDelete(index)} />
+      </View>
     </View>
   );
 }
