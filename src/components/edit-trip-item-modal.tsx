@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, StyleSheet, TextInput, View, Text, ScrollView } from "react-native";
+import { TextInput, View, Text } from "react-native";
 import Dialog from "react-native-dialog";
-// import { Dialog } from 'react-native-simple-dialogs';
-import CoolText from "./utils/cool-text";
 import { COLORS } from "assets/constants";
 import Heading from "./utils/heading";
-import CoolButton from "./utils/cool-button";
 import { GooglePlacesAutocomplete, GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Textarea from "./utils/textarea";
 import { get24HrFormattedTime } from "@/utils";
 
 
@@ -20,17 +16,15 @@ interface IEditTripItemModelProps {
 
 export default function EditTripItemModel({ route, visible, closeModal }: IEditTripItemModelProps) {
   const [ data, setData ] = useState(route);
-  const [ mode, setMode ] = useState('date');
   const [ showPicker, setShowPicker ] = useState(false);
   const googleMapsAPIKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
-  let ref = useRef<GooglePlacesAutocompleteRef>();
+  const ref = useRef<GooglePlacesAutocompleteRef>();
 
-    useEffect(() => {
-      if (ref && ref.current) {
-        ref.current.setAddressText(data.title);
-      }
-    }, []);
-
+  useEffect(() => {
+    if (ref && ref.current) {
+      ref.current.setAddressText(data.title);
+    }
+  }, []);
   const onChange = (e, time) => {
     setData({ ...data, time: get24HrFormattedTime(time) })
     setShowPicker(false);

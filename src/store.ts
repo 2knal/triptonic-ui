@@ -16,6 +16,11 @@ type APIStore = {
   setTripName: (string) => any;
   getTripName: () => string;
   fetchRoutesWithParams: (any) => any;
+  setRoutes: (any) => void;
+  days: any;
+  removeItemFromDay: any;
+  moveItemUp: any;
+  moveItemDown: any;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -24,6 +29,7 @@ export const usePromptStore = create<PromptStore>((set) => ({
 }));
 
 export const useAPIStore = create<APIStore>((set, get) => ({
+  days: {},
   tripName: '',
   params: {
     location: ''
@@ -47,8 +53,23 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       console.log('API DATA', response);
       const updatedResponse = await response.json();
       const { places, params } = updatedResponse;
+      let count = 1;
+      for (const place of places) {
+        place.key = count;
+        count += 1
+      }
+      console.log('STORE routes', places.map(place => place.key));
       set({ routes: places });
       set({ params });
+      const days = {}
+      for (const route of places) {
+        if (!(route.day in days)) {
+          days[route.day] = [];
+        }
+        days[route.day] = [...days[route.day], route]
+      }
+      set({ days });
+
       return places;
     } catch (e) {
       console.log(e);
@@ -81,4 +102,41 @@ export const useAPIStore = create<APIStore>((set, get) => ({
   getRoutes: () => get().routes,
   setTripName: (tripName) => (set({ tripName })),
   getTripName: () => get().tripName,
+  setRoutes: (routes) => (set({ routes })),
+  removeItemFromDay: (day, key) => set((state) => ({
+    days: {
+      ...state.days,
+      [day]: state.days[day].filter((item) => item.id !== key), // Filter out the item to remove
+    },
+  })),
+  moveItemUp: (day, key) => set((state) => {
+    const dayItems = state.days[day];
+    const index = dayItems.findIndex((item) => item.id === key);
+    if (index > 0) {
+      const newItems = [...dayItems];
+      [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]]; // Swap items
+      return {
+        days: {
+          ...state.days,
+          [day]: newItems,
+        },
+      };
+    }
+    return state;
+  }),
+  moveItemDown: (day, key) => set((state) => {
+    const dayItems = state.days[day];
+    const index = dayItems.findIndex((item) => item.id === key);
+    if (index < dayItems.length - 1) {
+      const newItems = [...dayItems];
+      [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]]; // Swap items
+      return {
+        days: {
+          ...state.days,
+          [day]: newItems,
+        },
+      };
+    }
+    return state;
+  }),
 }));
