@@ -62,7 +62,7 @@ export default function MapTimeline() {
           handleMoveUp={handleMoveUp}
           handleMoveDown={handleMoveDown}
           handleDelete={handleDelete}
-          routes={routes} />
+          routes={routes.filter((route) => route.day === day)} />
       ))}
     </ScrollView>
   );
@@ -74,7 +74,7 @@ function Day({ day, routes, handleMoveUp, handleMoveDown, handleDelete }) {
   return (
     <View>
       <Heading title={`Day ${day}`} css="text-2xl pb-8" />
-      <View className="flex flex-1 pl-6">
+      <View className="pl-6">
         {routes.map((route, index) => (
           <TimelineItem 
             key={route.key}
