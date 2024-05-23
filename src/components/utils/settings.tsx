@@ -8,7 +8,6 @@ import {
 } from 'react-native-popup-menu';
 import CoolText from "./cool-text";
 import CoolIcon from "./cool-icon";
-import { COLORS } from "assets/constants";
 
 interface ISettingsProp {
   isFirst: boolean;
@@ -21,6 +20,7 @@ interface ISettingsProp {
 
 export default function Settings({ isFirst, isLast, handleUp, handleDown, handleEdit, handleDelete }: ISettingsProp) {
   const [ opened, setOpened ] = useState(false);
+
   return (
     <Menu
       opened={opened}
@@ -30,7 +30,10 @@ export default function Settings({ isFirst, isLast, handleUp, handleDown, handle
           <CoolIcon iconName={"gear"} onPress={() => setOpened(true)}/>
       </MenuTrigger>
       <MenuOptions customStyles={{ optionsContainer: { width: 180, elevation: 1, borderRadius: 10 } }}>
-        <MenuOption>
+        <MenuOption onSelect={() => {
+          handleEdit();
+          setOpened(false);
+        }}>
           <View className="flex flex-row justify-start items-center w-full gap-4">
             <CoolIcon iconName="pencil" />
             <CoolText title="Edit" css="p-0 text-lg"/>

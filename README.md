@@ -49,6 +49,8 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [ ] Handle multiple values for individual params
 - [x] Day wise split, UI changes
 - [ ] Handle back navigation re-request to backend API
+- [ ] Edit Modal default value 
+- [ ] Delete timeline item causing the other list to disappear
 ---
 
 ### Troubleshooting
