@@ -1,3 +1,15 @@
+export interface IRoute {
+  name: string;
+  icon?: string;
+  latitude: number;
+  longitude: number;
+  latitudeDelta?: number;
+  longitudeDelta?: number;
+  time: string;
+  day: number;
+  photos: any;
+}
+
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

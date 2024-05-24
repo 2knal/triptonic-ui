@@ -8,18 +8,18 @@ import {
 } from 'react-native-popup-menu';
 import CoolText from "./cool-text";
 import CoolIcon from "./cool-icon";
+import { useAPIStore } from "@/store";
 
 interface ISettingsProp {
+  routeKey: number;
   isFirst: boolean;
   isLast: boolean;
-  handleUp: any;
-  handleDown: any;
   handleEdit: any;
-  handleDelete: any;
 }
 
-export default function Settings({ isFirst, isLast, handleUp, handleDown, handleEdit, handleDelete }: ISettingsProp) {
+export default function Settings({ routeKey, isFirst, isLast, handleEdit }: ISettingsProp) {
   const [ opened, setOpened ] = useState(false);
+  const { deleteRoute, moveRouteUp, moveRouteDown } = useAPIStore();
 
   return (
     <Menu
@@ -40,7 +40,7 @@ export default function Settings({ isFirst, isLast, handleUp, handleDown, handle
           </View>
         </MenuOption>
         <MenuOption onSelect={() => {
-          handleDelete();
+          deleteRoute(routeKey);
           setOpened(false);
         }}>
           <View className="flex flex-row justify-start items-center w-full gap-4">
@@ -49,7 +49,8 @@ export default function Settings({ isFirst, isLast, handleUp, handleDown, handle
           </View>
         </MenuOption>
         {!isFirst && <MenuOption onSelect={() => {
-          handleUp();
+          moveRouteUp(routeKey);
+          // handleUp();
           setOpened(false);
         }}>
           <View className="flex flex-row justify-start items-center w-full gap-4">
@@ -58,7 +59,7 @@ export default function Settings({ isFirst, isLast, handleUp, handleDown, handle
           </View>
         </MenuOption>}
         {!isLast && <MenuOption onSelect={() => {
-          handleDown();
+          moveRouteDown(routeKey);
           setOpened(false);
         }}>
           <View className="flex flex-row justify-start items-center w-full gap-4">

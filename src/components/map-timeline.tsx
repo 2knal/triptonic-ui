@@ -6,7 +6,6 @@ import Heading from "./utils/heading";
 import { useState, useCallback } from "react";
 import Settings from "./utils/settings";
 import TripItemModel from "./trip-item-modal";
-import CoolButton from "./utils/cool-button";
 
 
 export default function MapTimeline() {
@@ -24,38 +23,6 @@ export default function MapTimeline() {
 
   const totalDays = Array.from({ length: findTotalDaysFromRoutes(routes) }, (_, i) => i + 1);
 
-  const handleMoveUp = useCallback(
-    (key) => {
-      const index = routes.findIndex(route => route.key === key);
-      if (index !== 0) {
-        const updatedRoutes = [...routes];
-        [updatedRoutes[index - 1], updatedRoutes[index]] = [updatedRoutes[index], updatedRoutes[index - 1]];
-        setRoutes(updatedRoutes);
-      }
-    },
-    [routes, setRoutes]
-  );
-
-  const handleMoveDown = useCallback(
-    (key) => {
-      const index = routes.findIndex(route => route.key === key);
-      if (index !== routes.length - 1) {
-        const updatedRoutes = [...routes];
-        [updatedRoutes[index + 1], updatedRoutes[index]] = [updatedRoutes[index], updatedRoutes[index + 1]];
-        setRoutes(updatedRoutes);
-      }
-    },
-    [routes, setRoutes]
-  );
-
-  const handleDelete = useCallback(
-    (key) => {
-      const index = routes.findIndex(route => route.key === key);
-      setRoutes(routes.filter((route, i) => i !== index));
-    },
-    [routes, setRoutes]
-  );
-
   const addNewPlace = () => {
     setModalVisible(true);
   };
@@ -72,17 +39,14 @@ export default function MapTimeline() {
         <Day
           key={day}
           day={day}
-          handleMoveUp={handleMoveUp}
-          handleMoveDown={handleMoveDown}
-          handleDelete={handleDelete}
           routes={routes.filter((route) => route.day === day)} />
       ))}
-      <TripItemModel title='Edit' route={{}} visible={modalVisible} closeModal={() => setModalVisible(false)} />
+      <TripItemModel title='Add' route={{}} visible={modalVisible} closeModal={() => setModalVisible(false)} />
     </ScrollView>
   );
 }
 
-function Day({ day, routes, handleMoveUp, handleMoveDown, handleDelete }) {
+function Day({ day, routes }) {
   console.log('Day rerender:', day)
   return (
     <View>
@@ -93,9 +57,6 @@ function Day({ day, routes, handleMoveUp, handleMoveDown, handleDelete }) {
             key={route.key}
             route={route}
             isFirst={index === 0}
-            handleMoveUp={handleMoveUp}
-            handleMoveDown={handleMoveDown}
-            handleDelete={handleDelete}
             isLast={index === routes.length - 1} />
         ))}
       </View>
@@ -103,7 +64,7 @@ function Day({ day, routes, handleMoveUp, handleMoveDown, handleDelete }) {
   );
 }
 
-function TimelineItem({ route, isFirst, isLast, handleMoveUp, handleMoveDown, handleDelete }) {
+function TimelineItem({ route, isFirst, isLast }) {
   const { name, time } = route;
   const borderStyle = isLast ? '' : 'border-l-2';
   const [ modalVisible, setModalVisible ] = useState(false);
@@ -116,12 +77,10 @@ function TimelineItem({ route, isFirst, isLast, handleMoveUp, handleMoveDown, ha
       <CoolText title={'Lorem Ipsum Thy Bitch'} css="pb-4" />
       <View className="-translate-y-1/4 absolute top-0 right-0">
         <Settings
+          routeKey={route.key}
           isFirst={isFirst}
           isLast={isLast}
-          handleUp={() => handleMoveUp(route.key)} 
-          handleDown={() => handleMoveDown(route.key)} 
-          handleEdit={() => setModalVisible(true)} 
-          handleDelete={() => handleDelete(route.key)} />
+          handleEdit={() => setModalVisible(true)} />
       </View>
       <TripItemModel title='Edit' route={route} visible={modalVisible} closeModal={() => setModalVisible(false)} />
     </View>

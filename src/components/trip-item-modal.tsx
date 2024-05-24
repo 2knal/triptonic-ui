@@ -108,6 +108,9 @@ export default function TripItemModel({ title, route, visible, closeModal }: ITr
         minLength={2}
         placeholder='Search'
         onPress={(data, details=null) => {
+          console.log('DATA', data);
+          console.log();
+          console.log('DETAILS', details);
           ref.current.setAddressText(data.description.split(',')[0]);
         }}
         query={{

@@ -17,6 +17,9 @@ type APIStore = {
   getTripName: () => string;
   fetchRoutesWithParams: (any) => any;
   setRoutes: (any) => void;
+  deleteRoute: (number) => void;
+  moveRouteUp: (number) => void;
+  moveRouteDown: (number) => void;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -91,4 +94,57 @@ export const useAPIStore = create<APIStore>((set, get) => ({
   setTripName: (tripName) => (set({ tripName })),
   getTripName: () => get().tripName,
   setRoutes: (routes) => (set({ routes })),
+  deleteRoute: (key) => set((state) => {
+    const index = state.routes.findIndex(route => route.key === key);
+    return {
+      ...state,
+      routes: state.routes.filter((route, i) => i !== index)
+    }
+  }),
+  moveRouteUp: (key) => set((state) => {
+    const index = state.routes.findIndex(route => route.key === key);
+    const updatedRoutes = [...state.routes];
+    if (index !== 0) {
+      const updatedRoutes = [...state.routes];
+
+      // Swap routes
+      const tempRoute = updatedRoutes[index - 1];
+      updatedRoutes[index - 1] = updatedRoutes[index];
+      updatedRoutes[index] = tempRoute;
+  
+      // Swap time attributes
+      const tempTime = updatedRoutes[index - 1].time;
+      updatedRoutes[index - 1] = { ...updatedRoutes[index - 1], time: updatedRoutes[index].time };
+      updatedRoutes[index] = { ...updatedRoutes[index], time: tempTime };
+  
+      return { ...state, routes: updatedRoutes };
+    }
+    return {
+      ...state,
+      routes: updatedRoutes
+    };
+  }),
+  moveRouteDown: (key) => set((state) => {
+    const index = state.routes.findIndex(route => route.key === key);
+    const updatedRoutes = [...state.routes];
+    if (index !== state.routes.length - 1) {
+      const updatedRoutes = [...state.routes];
+
+      // Swap routes
+      const tempRoute = updatedRoutes[index + 1];
+      updatedRoutes[index + 1] = updatedRoutes[index];
+      updatedRoutes[index] = tempRoute;
+  
+      // Swap time attributes
+      const tempTime = updatedRoutes[index + 1].time;
+      updatedRoutes[index + 1] = { ...updatedRoutes[index + 1], time: updatedRoutes[index].time };
+      updatedRoutes[index] = { ...updatedRoutes[index], time: tempTime };
+  
+      return { ...state, routes: updatedRoutes };
+    }
+    return {
+      ...state,
+      routes: updatedRoutes
+    };
+  }),
 }));
