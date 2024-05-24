@@ -50,7 +50,8 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] Day wise split, UI changes
 - [ ] Handle back navigation re-request to backend API
 - [ ] Edit Modal default value 
-- [ ] Delete timeline item causing the other list to disappear
+- [x] Delete timeline item causing the other list to disappear
+- [ ] Button Opacity fix - use TouchableOpacity
 ---
 
 ### Troubleshooting

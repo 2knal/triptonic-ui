@@ -21,8 +21,7 @@ import MapTimeline from "@/components/map-timeline";
 export default function Trip() {
   const params = useLocalSearchParams();
   const { prompt } = usePromptStore();
-  const { fetchRoutes, fetchRoutesWithParams } = useAPIStore();
-  const [markers, setMarkers] = useState([]);
+  const { routes, fetchRoutes, fetchRoutesWithParams } = useAPIStore();
   const [isLoading, setIsLoading] = useState(true);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [navbarScr, setNavbarScr] = useState(1);
@@ -33,10 +32,10 @@ export default function Trip() {
   const router = useRouter();
 
   const animatetoMarkers = () => {
-    if (!isLoading && mapRef.current && markers.length > 0) {
+    if (!isLoading && mapRef.current && routes.length > 0) {
       console.log("Animate to map location!");
       mapRef.current.animateCamera(
-        { center: markers[0], zoom: 12 },
+        { center: routes[0], zoom: 12 },
         { duration: 2500 }
       );
       // mapRef.current.fitToSuppliedMarkers(
@@ -69,17 +68,15 @@ export default function Trip() {
           return;
         }
         // console.log('GOT EM ALL', data);
-
-        setMarkers(data);
         setIsLoading(false);
       }
     }
     fetchDataFromAPI();
-  }, [isLoading, setMarkers]);
+  }, [isLoading]);
 
   useEffect(() => {
     animatetoMarkers();
-  }, [isLoading, markers]);
+  }, [isLoading, routes]);
 
   function loadBottomSheetComponent(screenNo: number) {
     if (screenNo === 1) return <Prompt />;
@@ -87,7 +84,7 @@ export default function Trip() {
     return <MapTimeline />;
   }
 
-  if (isLoading && !mapLoaded) {
+  if (isLoading && (!mapLoaded)) {
     console.log("Loader rendered");
     return <Loader />;
   }
@@ -103,31 +100,21 @@ export default function Trip() {
           setMapLoaded(true);
         }}
       >
-        {markers.map((marker, index) => (
+        {routes.map((marker, index) => (
           <Marker key={index} title={marker.name} coordinate={marker}>
             <View
               className="flex flex-1 w-8 h-8 p-1 justify-center items-center rounded-full bg-reddish drop-shadow-2xl text-center"
               style={{ elevation: 3 }}
             >
-              {/* <ImageBackground
-                source={{ uri: marker.icon }}
-                className="flex flex-1 w-full h-full"
-                resizeMode="contain"
-              /> */}
               <CoolText title={index + 1} css="font-bold color-white" />
             </View>
             <CoolCallout marker={marker} />
           </Marker>
         ))}
-        {/* <Polyline
-          coordinates={markers}
-          strokeWidth={4}
-          strokeColor={COLORS['reddish']}
-        /> */}
         <MapViewDirections
-          origin={markers[0]}
-          destination={markers[markers.length - 1]}
-          waypoints={markers.slice(1, -1)}
+          origin={routes[0]}
+          destination={routes[routes.length - 1]}
+          waypoints={routes.slice(1, -1)}
           apikey={googleMapsAPIKey}
           strokeWidth={4}
           strokeColor={COLORS['reddish']}
@@ -144,15 +131,3 @@ export default function Trip() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1.0,
-  },
-});
