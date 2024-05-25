@@ -20,16 +20,16 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] Decide upon logo using lottie animations
 - [x] Adjust font-weight for rethink font (download different weights from googlefonts)
 - [x] Add logo to the header
-- [ ] Rewrite all the styles using tailwind
+- [x] Rewrite all the styles using tailwind
 - [x] Make components resusable like button, text
 - [x] Setup constants for maps and color themes
 - [x] Decide upon initial map zoom
 - [ ] Google map styles - https://mapstyle.withgoogle.com/
 - [x] Decide upon loader animations - lottie
-- [ ] Add back navigation button to map view screens
-- [ ] Make the filter screen button clickables.
-- [ ] Make progress with the save page and login page.
-- [ ] Show loader when we call the API and until markers are shown on the page.
+- [x] Add back navigation button to map view screens
+- [x] Make the filter screen button clickables.
+- [x] Make progress with the save page and login page.
+- [x] Show loader when we call the API and until markers are shown on the page.
 - [x] Integrate a state management library like redux or zustand to pass data from one page to another instead of using AsyncStorage
 - [x] Handle trip page's navbar's absolute bottom positioning, why is it not the same as the landing page.
 - [x] Trip page buttons, on hover circular selection color around it.
@@ -52,6 +52,8 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [ ] Edit Modal default value 
 - [x] Delete timeline item causing the other list to disappear
 - [ ] Button Opacity fix - use TouchableOpacity
+- [ ] Add mode of transport to path drawing
+- [ ] Add proper types for routes instead of using any
 ---
 
 ### Troubleshooting

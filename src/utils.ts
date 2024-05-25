@@ -1,13 +1,15 @@
 export interface IRoute {
-  name: string;
+  key?: number;
+  name?: string;
   icon?: string;
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
   latitudeDelta?: number;
   longitudeDelta?: number;
   time: string;
   day: number;
-  photos: any;
+  photos?: any;
+  notes?: string;
 }
 
 export function capitalizeFirstLetter(string) {
@@ -22,6 +24,20 @@ export function get24HrFormattedTime(date) {
   const paddedMinutes = minutes.toString().padStart(2, '0');
   
   return `${paddedHours}:${paddedMinutes}`;
+}
+
+export function get12HrFormattedTime(date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  
+  const paddedHours = hours.toString().padStart(2, '0');
+  const paddedMinutes = minutes.toString().padStart(2, '0');
+  
+  return `${paddedHours}:${paddedMinutes} ${ampm}`;
 }
 
 export interface IPromptParams {

@@ -3,45 +3,37 @@ import CoolText from "./utils/cool-text";
 import { TouchableOpacity, View } from "react-native";
 import { ScrollView, FlatList, Text } from "react-native";
 import Heading from "./utils/heading";
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Settings from "./utils/settings";
 import TripItemModel from "./trip-item-modal";
+import { DEFAULT_ROUTE } from "assets/constants";
 
 
 export default function MapTimeline() {
   const [ modalVisible, setModalVisible ] = useState(false);
-
-  const { routes, setRoutes } = useAPIStore();
-  console.log('Timeline rerender', routes.map(route => route.key));
-  const findTotalDaysFromRoutes = useCallback((routes) => {
-    let totalDays = 1;
-    for (const route of routes) {
-      totalDays = Math.max(totalDays, route.day);
-    }
-    return totalDays;
-  }, [routes]);
-
-  const totalDays = Array.from({ length: findTotalDaysFromRoutes(routes) }, (_, i) => i + 1);
+  const { routes, totalDays } = useAPIStore();
+  console.log('Timeline rerender:', routes.map(route => route.key));
+  console.log('Total days:', totalDays);
 
   const addNewPlace = () => {
     setModalVisible(true);
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always" contentContainerClassName="p-6" nestedScrollEnabled={true}>
+    <ScrollView keyboardShouldPersistTaps="always" contentContainerClassName="bg-cute-purple p-6" nestedScrollEnabled={true}>
       <View className="items-center">
         <Heading title="Timeline" css="text-2xl pb-6" />
       </View>
       <TouchableOpacity onPress={addNewPlace} className="flex justify-center items-center px-4 py-2 rounded-full border-reddish border-2 w-36 mb-6">
         <CoolText title="Add Place" css="text-xl"/>
       </TouchableOpacity>
-      {totalDays.map((day) => (
+      {Array.from({ length: totalDays }, (_, i) => i + 1).map((day) => (
         <Day
           key={day}
           day={day}
           routes={routes.filter((route) => route.day === day)} />
       ))}
-      <TripItemModel title='Add' route={{}} visible={modalVisible} closeModal={() => setModalVisible(false)} />
+      <TripItemModel title='Add' route={DEFAULT_ROUTE} visible={modalVisible} closeModal={() => setModalVisible(false)} />
     </ScrollView>
   );
 }

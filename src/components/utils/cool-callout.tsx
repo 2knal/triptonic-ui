@@ -19,7 +19,7 @@ export default function CoolCallout({ marker }: ICoolCallout) {
     return photoUrl;
   }
 
-  const imageUri = constructPhotoUrl(marker.photos);
+  // const imageUri = constructPhotoUrl(marker.photos);
   // console.log(imageUri);
 
   return (

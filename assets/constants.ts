@@ -1,3 +1,5 @@
+import { IRoute } from "@/utils";
+
 export const COLORS = {
   'powder-gold': '#E8A13A',
   'orangish': '#FFA977',
@@ -16,6 +18,13 @@ export const COLORS = {
 
 export const TRIP = {
   DETAILS: 'GENERATED_TRIP'
+}
+
+export const DEFAULT_ROUTE: IRoute = {
+  latitudeDelta: 1,
+  longitudeDelta: 1,
+  time: "00:00",
+  day: 1
 }
 
 // Centered around Irvine

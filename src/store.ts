@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { IPromptParams } from "./utils";
+import { stateCache } from "expo-router/build/getLinkingConfig";
 
 type PromptStore = {
   prompt: string;
@@ -16,10 +17,14 @@ type APIStore = {
   setTripName: (string) => any;
   getTripName: () => string;
   fetchRoutesWithParams: (any) => any;
+  totalDays: number;
   setRoutes: (any) => void;
   deleteRoute: (number) => void;
   moveRouteUp: (number) => void;
   moveRouteDown: (number) => void;
+  addRouteToTrip: (any) => void;
+  editRoute: (any) => void;
+  setTotalDays: () => void;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -28,7 +33,7 @@ export const usePromptStore = create<PromptStore>((set) => ({
 }));
 
 export const useAPIStore = create<APIStore>((set, get) => ({
-  days: {},
+  totalDays: 1,
   tripName: '',
   params: {
     location: ''
@@ -57,9 +62,15 @@ export const useAPIStore = create<APIStore>((set, get) => ({
         place.key = count;
         count += 1
       }
+
+      let totalDays = 1;
+      for (const place of places) {
+        totalDays = Math.max(totalDays, place.day);
+      }
       console.log('STORE routes', places.map(place => place.key));
       set({ routes: places });
       set({ params });
+      set({ totalDays });
 
       return places;
     } catch (e) {
@@ -83,8 +94,16 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       const response = await fetch(url);
       const updatedResponse = await response.json();
       const { places, params } = updatedResponse;
+
+      let totalDays = 1;
+      for (const place of places) {
+        totalDays = Math.max(totalDays, place.day);
+      }
+      console.log('STORE routes', places.map(place => place.key));
       set({ routes: places });
       set({ params });
+      set({ totalDays });
+      
       return places;
     } catch (e) {
       return { 'error': true };
@@ -147,4 +166,50 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       routes: updatedRoutes
     };
   }),
+  addRouteToTrip: (route) => set((state) => {
+    const totalRoutes = state.routes.length;
+    const updatedRoutes = [...state.routes, { ...route, key: totalRoutes + 1 }];
+    updatedRoutes.sort((a, b) => {
+      if (a.day !== b.day) {
+        return a.day - b.day;
+      } else {
+        const timeA = parseInt(a.time.replace(":", ""));
+        const timeB = parseInt(b.time.replace(":", ""));
+        return timeA - timeB;
+      }
+    });
+
+    state.setTotalDays();
+    
+    return { ...state, routes: updatedRoutes };
+  }),
+  editRoute: (updatedRoute) => set((state) => {
+    const updatedRoutes = state.routes.map(route =>
+      route.key === updatedRoute.key ? updatedRoute : route
+    );
+    
+    updatedRoutes.sort((a, b) => {
+      if (a.day !== b.day) {
+        return a.day - b.day; 
+      } else {
+        const timeA = parseInt(a.time.replace(":", ""));
+        const timeB = parseInt(b.time.replace(":", ""));
+        return timeA - timeB;
+      }
+    });
+
+    state.setTotalDays();
+
+    return { ...state, routes: updatedRoutes };
+  }),
+  setTotalDays: () => set((state) => {
+    let totalDays = 1;
+    for (const route of state.routes) {
+      totalDays = Math.max(totalDays, route.day);
+    }
+    return {
+      ...state,
+      totalDays
+    };
+  })
 }));
