@@ -20,7 +20,7 @@ export default function MapTimeline() {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always" contentContainerClassName="bg-cute-purple p-6" nestedScrollEnabled={true}>
+    <ScrollView keyboardShouldPersistTaps="always" contentContainerClassName="p-6" nestedScrollEnabled={true}>
       <View className="items-center">
         <Heading title="Timeline" css="text-2xl pb-6" />
       </View>

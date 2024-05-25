@@ -10,6 +10,8 @@ export interface IRoute {
   day: number;
   photos?: any;
   notes?: string;
+  rating?: number;
+  cost?: number;
 }
 
 export function capitalizeFirstLetter(string) {
