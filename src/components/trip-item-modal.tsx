@@ -113,7 +113,7 @@ export default function TripItemModel({ title, route, visible, closeModal }: ITr
         className="font-rethink bg-white w-full text-lg color-dark-text h-12 border-reddish border-b-2 px-3 mb-6"
         placeholder="Add day..."
         keyboardType='numeric'
-        onChangeText={(day) => setRouteData({ ...routeData, day })}
+        onChangeText={(day) => setRouteData({ ...routeData, day: +day })}
         value={`${routeData.day}`}
         maxLength={2}
       />   

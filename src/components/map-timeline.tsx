@@ -11,9 +11,14 @@ import { DEFAULT_ROUTE } from "assets/constants";
 
 export default function MapTimeline() {
   const [ modalVisible, setModalVisible ] = useState(false);
-  const { routes, totalDays } = useAPIStore();
+  const { routes, totalDays, setTotalDays } = useAPIStore();
   console.log('Timeline rerender:', routes.map(route => route.key));
   console.log('Total days:', totalDays);
+
+  useEffect(() => {
+    setTotalDays();
+    console.log('Routes updated!')
+  }, [routes]);
 
   const addNewPlace = () => {
     setModalVisible(true);
@@ -66,7 +71,7 @@ function TimelineItem({ route, isFirst, isLast }) {
       <View className="absolute top-0 left-0 w-5 h-5 bg-reddish rounded-full -translate-y-1/2 -translate-x-1/2" />
       <CoolText title={time} css="color-gray pb-2" />
       <Heading title={name} css="text-lg pb-1" />
-      <CoolText title={route.notes ?? 'Lorem Ipsum Thy Bitch'} css="pb-4" />
+      <CoolText title={route.notes ?? 'Notes'} css="pb-4" />
       <View className="-translate-y-1/4 absolute top-0 right-0">
         <Settings
           routeKey={route.key}
