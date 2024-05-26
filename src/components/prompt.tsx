@@ -24,23 +24,23 @@ export default function Prompt() {
   };
 
   return (
-    <View className="flex flex-1 p-6">
+    <View className="flex flex-1 p-6 w-full">
       <Textarea
         placeholder="Enter Trip prompt..."
         text={prompt}
         onChangeText={(t: string) => changePrompt(t)}
       />
-      <View className="gap-6 flex-row self-center pb-24">
+      <View className="w-80 self-center flex flex-row justify-between items-center pb-24">
         <CoolButton
           onPress={closePrompt}
-          buttonCss="w-48 bg-bluei"
-          textCss="color-white"
+          buttonCss="w-36 bg-bluei"
+          textCss="text-xl color-white"
           text={"Cancel"}
         />
         <CoolButton
           onPress={generateTrip}
-          buttonCss="w-48 bg-sageish"
-          textCss="color-white"
+          buttonCss="w-36 bg-sageish"
+          textCss="text-xl color-white"
           text={"Generate"}
         />
       </View>

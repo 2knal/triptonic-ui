@@ -168,7 +168,7 @@ export default function Filter() {
       </View>
 
       <CoolText title="Mode of Transport" css="text-xl pb-2" />
-      <View className="flex-row items-center justify-around flex-wrap pb-4">
+      <View className="flex-row items-center justify-around flex-wrap pb-8">
         {modeOfTransport.map((value, i) => {
           return (
             <Pill
@@ -181,17 +181,17 @@ export default function Filter() {
         })}
       </View>
 
-      <View className="gap-6 flex-row self-center pb-24">
+      <View className="w-80 self-center flex flex-row justify-between items-center pb-24">
         <CoolButton
           onPress={closePrompt}
-          buttonCss="w-48 bg-bluei"
-          textCss="color-white"
+          buttonCss="w-36 bg-bluei"
+          textCss="text-xl color-white"
           text={"Cancel"}
         />
         <CoolButton
           onPress={handleFilterApply}
-          buttonCss="w-48 bg-sageish"
-          textCss="color-white"
+          buttonCss="w-36 bg-sageish"
+          textCss="text-xl color-white"
           text={"Apply"}
         />
       </View>

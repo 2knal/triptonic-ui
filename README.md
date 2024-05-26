@@ -51,7 +51,7 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [ ] Handle back navigation re-request to backend API
 - [ ] Edit Modal default value 
 - [x] Delete timeline item causing the other list to disappear
-- [ ] Button Opacity fix - use TouchableOpacity
+- [x] Button Opacity fix - use TouchableOpacity
 - [ ] Add mode of transport to path drawing
 - [ ] Add proper types for routes instead of using any
 ---

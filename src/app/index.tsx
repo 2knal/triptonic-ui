@@ -13,16 +13,10 @@ export default function Index() {
   return (
     <View className="flex flex-1 bg-egg-white">
       <Map />
-      {/* <Image
-              width={120}
-              height={120}
-              source={{ uri: 'https://images.pexels.com/photos/479454/pexels-photo-479454.jpeg' }}
-              resizeMode="contain"
-            /> */}
       <View className="absolute bottom-14 self-center">
         <CoolButton
           onPress={() => bottomSheetRef.current?.present()}
-          buttonCss="w-80 bg-reddish"
+          buttonCss="w-80 bg-reddish "
           textCss="color-egg-white"
           text={"Let's plan!"} />
         </View>
