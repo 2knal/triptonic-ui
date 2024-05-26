@@ -53,6 +53,7 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] Delete timeline item causing the other list to disappear
 - [x] Button Opacity fix - use TouchableOpacity
 - [ ] Add mode of transport to path drawing
+  - "DRIVING", "BICYCLING", "WALKING", and "TRANSIT" from backend
 - [ ] Add proper types for routes instead of using any
 ---
 

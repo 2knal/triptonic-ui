@@ -35,8 +35,8 @@ export default function Filter() {
   const [placesList, setPlacesList] = useState(params?.attractions ? params.attractions.split('|') : []);
   const [tripTypeList, setTripTypeList] = useState(params?.type_of_trip ? params.type_of_trip.split('|') : ['friends']);
   const [transportList, setTransportList] = useState(params?.mode_of_transport ? params.mode_of_transport.split('|') : ['car']);
-  const [days, setDays] = useState(1);
-  const [people, setPeople] = useState(4);
+  const [days, setDays] = useState(+params.duration);
+  const [people, setPeople] = useState(+params.no_of_people);
 
   const onCuisineBtnPress = (cuisine: string) => {
     if (cuisineList.includes(cuisine)) {

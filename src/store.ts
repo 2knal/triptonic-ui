@@ -43,20 +43,20 @@ export const useAPIStore = create<APIStore>((set, get) => ({
   fetchRoutes: async (p: string) => {
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
-    // const url = API_ENDPOINT + '/prompt';
-    const url = 'https://gauravghati.github.io/apis/data.json';
+    const url = API_ENDPOINT + '/prompt';
+    // const url = 'https://gauravghati.github.io/apis/data.json';
     try {
-      // const response = await fetch(url, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({ ...p })
-      // });
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: p })
+      });
+      // const response = await fetch(url);
       console.log('API DATA', response);
       const updatedResponse = await response.json();
-      const { places, params } = updatedResponse;
+      const { places, prompt } = updatedResponse;
       let count = 1;
       for (const place of places) {
         place.key = count;
@@ -68,8 +68,9 @@ export const useAPIStore = create<APIStore>((set, get) => ({
         totalDays = Math.max(totalDays, place.day);
       }
       console.log('STORE routes', places.map(place => place.key));
+      console.log(prompt);
       set({ routes: places });
-      set({ params });
+      set({ params: prompt });
       set({ totalDays });
 
       return places;
@@ -81,27 +82,33 @@ export const useAPIStore = create<APIStore>((set, get) => ({
   fetchRoutesWithParams: async (p: any) => {
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
-    // const url = API_ENDPOINT + '/apply_filters';
-    const url = 'https://gauravghati.github.io/apis/data.json';
+    const url = API_ENDPOINT + '/apply_filters';
+    // const url = 'https://gauravghati.github.io/apis/data.json';
     try {
-      // const response = await fetch(url, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({ ...p })
-      // });
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ...p })
+      });
+      // const response = await fetch(url);
       const updatedResponse = await response.json();
-      const { places, params } = updatedResponse;
+      const { places, prompt } = updatedResponse;
+      let count = 1;
+      for (const place of places) {
+        place.key = count;
+        count += 1
+      }
 
       let totalDays = 1;
       for (const place of places) {
         totalDays = Math.max(totalDays, place.day);
       }
       console.log('STORE routes', places.map(place => place.key));
+      console.log(prompt);
       set({ routes: places });
-      set({ params });
+      set({ params: prompt });
       set({ totalDays });
       
       return places;
