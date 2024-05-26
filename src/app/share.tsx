@@ -1,18 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, TextInput, TouchableOpacity } from "react-native";
 import CoolText from "@/components/utils/cool-text";
 import NavButton from "@/components/utils/nav-button";
 import * as Clipboard from 'expo-clipboard';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { COLORS } from "assets/constants";
+import { useAPIStore } from "@/store";
+import Loader from "@/components/loader";
+import { useToast } from "react-native-toast-notifications";
+import { useRouter } from "expo-router";
 
 export default function Share() {
+  const toast = useToast();
+  const router = useRouter();
+  const { saveTrip } = useAPIStore();
+  const [isLoading, setIsLoading] = useState(true);
   const [text, setText] = useState('triptonic.com/34fgh46');
-  const iconName: any = 'clipboard'
 
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(text);
   };
+
+  useEffect(() => {
+    async function saveTripToDB() {
+      if (isLoading) {
+        const data = await saveTrip();
+        if ('error' in data) {
+          toast.show("Unable to save trip. Please try again later :(", {
+            type: 'danger'
+          });
+          router.push({ pathname: '/save' });
+          return;
+        }
+        setText(data.link);
+        setIsLoading(false);
+      }
+    }
+    saveTripToDB();
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <View className="bg-egg-white flex flex-1 justify-center items-center p-4">
@@ -29,7 +58,7 @@ export default function Share() {
         />
         <TouchableOpacity onPress={handleCopyToClipboard} 
           className="flex flex-1 justify-center items-center absolute right-3 top-1/4 self-center">
-          <FontAwesome name={iconName} color={COLORS['darker-text']} size={24} />
+          <FontAwesome name="clipboard" color={COLORS['darker-text']} size={24} />
         </TouchableOpacity>
       </View>
     </View>

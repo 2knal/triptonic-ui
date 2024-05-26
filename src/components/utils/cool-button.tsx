@@ -15,9 +15,9 @@ export default function CoolButton(props: ICoolButtonProps) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View className={"flex items-center justify-center px-4 py-3 rounded-full " + buttonCss}>
-          <Text className={"font-rethink text-2xl " + textCss}>
-            {text}
-          </Text>
+        <Text className={"font-rethink text-2xl " + textCss}>
+          {text}
+        </Text>
       </View>
     </TouchableOpacity>
   );

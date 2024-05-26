@@ -25,6 +25,7 @@ type APIStore = {
   addRouteToTrip: (any) => void;
   editRoute: (any) => void;
   setTotalDays: () => void;
+  saveTrip: () => any;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -54,7 +55,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
         body: JSON.stringify({ prompt: p })
       });
       // const response = await fetch(url);
-      console.log('API DATA', response);
       const updatedResponse = await response.json();
       const { places, prompt } = updatedResponse;
       let count = 1;
@@ -67,8 +67,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       for (const place of places) {
         totalDays = Math.max(totalDays, place.day);
       }
-      console.log('STORE routes', places.map(place => place.key));
-      console.log(prompt);
       set({ routes: places });
       set({ params: prompt });
       set({ totalDays });
@@ -105,8 +103,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       for (const place of places) {
         totalDays = Math.max(totalDays, place.day);
       }
-      console.log('STORE routes', places.map(place => place.key));
-      console.log(prompt);
       set({ routes: places });
       set({ params: prompt });
       set({ totalDays });
@@ -218,5 +214,27 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       ...state,
       totalDays
     };
-  })
+  }),
+  saveTrip: async () => {
+    const { tripName, routes, params } = get(); 
+    const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
+    const url = API_ENDPOINT + '/save';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          name: tripName,
+          places: routes,
+          params
+        })
+      });
+      const updatedResponse = await response.json();      
+      return updatedResponse;
+    } catch (e) {
+      return { 'error': true };
+    }
+  },
 }));
