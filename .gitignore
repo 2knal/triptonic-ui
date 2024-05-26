@@ -22,4 +22,4 @@ web-build/
 *.tsbuildinfo
 
 .vscode
-.eas.json
+eas.json
