@@ -30,7 +30,7 @@
             {
               "scheme": "https",
               "host": "*.triptonic.app",
-              "pathPrefix": "/records"
+              "pathPrefix": "/trip"
             }
           ],
           "category": [
