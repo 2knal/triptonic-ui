@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "triptonic-ui",
-    "slug": "triptonic-ui",
-    "scheme": "one.triptonic",
+    "name": "TripTonic",
+    "slug": "triptonic",
+    "scheme": "triptonic",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/triptonic-logo.png",
+    "icon": "./assets/triptonic-app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/triptonic-splash.png",
@@ -13,12 +13,32 @@
       "backgroundColor": "#F5ECE9"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "**/*",
+      "assets/*"
     ],
     "ios": {
+      "bundleIdentifier": "app.triptonic",
       "supportsTablet": true
     },
     "android": {
+      "package": "app.triptonic",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.triptonic.app",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/triptonic-logo.png",
         "backgroundColor": "#F5ECE9"
@@ -32,9 +52,17 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/bricolage/bricolage.ttf", "./assets/fonts/rethink/rethink.ttf", "./assets/fonts/rethink/rethink-italic.ttf"]
+          "fonts": [
+            "./assets/fonts/bricolage/bricolage.ttf",
+            "./assets/fonts/rethink/rethink.ttf"
+          ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b1b55898-bacc-4b80-bb39-14f1a057c8cf"
+      }
+    }
   }
 }

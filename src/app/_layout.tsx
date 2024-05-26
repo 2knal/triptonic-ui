@@ -12,6 +12,22 @@ import { Animated, Easing } from "react-native";
 import Splash from "@/components/splash";
 import { ToastProvider } from "react-native-toast-notifications";
 import { MenuProvider } from 'react-native-popup-menu';
+import { NavigationContainer } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+
+const linking = {
+  prefixes: [Linking.createURL('/'), 'https://triptonic.app'],
+  config: {
+    screens: {
+      trip: {
+        path: 'trip/:id',
+        parse: {
+          id: (id) => `${id}`,
+        },
+      },
+    },
+  },
+};
 
 export default function Layout() {
   const animationProgress = useRef(new Animated.Value(0));

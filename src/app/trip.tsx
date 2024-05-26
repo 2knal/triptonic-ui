@@ -20,6 +20,7 @@ import MapTimeline from "@/components/map-timeline";
 
 export default function Trip() {
   const params = useLocalSearchParams();
+  console.log('Received params:', params);
   const { prompt } = usePromptStore();
   const { routes, fetchRoutes, fetchRoutesWithParams } = useAPIStore();
   const [isLoading, setIsLoading] = useState(true);
