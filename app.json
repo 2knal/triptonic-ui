@@ -22,23 +22,6 @@
     },
     "android": {
       "package": "app.triptonic",
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "*.triptonic.app",
-              "pathPrefix": "/trip"
-            }
-          ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
-        }
-      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/triptonic-logo.png",
         "backgroundColor": "#F5ECE9"
@@ -56,6 +39,14 @@
             "./assets/fonts/bricolage/bricolage.ttf",
             "./assets/fonts/rethink/rethink.ttf"
           ]
+        }
+      ],
+      [ 
+        "expo-build-properties",
+        { 
+          "android": { 
+            "usesCleartextTraffic": true 
+          }
         }
       ]
     ],

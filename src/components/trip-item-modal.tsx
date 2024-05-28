@@ -5,7 +5,7 @@ import { COLORS } from "assets/constants";
 import Heading from "./utils/heading";
 import { GooglePlacesAutocomplete, GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { get12HrFormattedTime, get24HrFormattedTime } from "@/utils";
+import { get12HrFormattedTime, get24HrFormattedTime, getDateObjectFromTimeString } from "@/utils";
 import { useAPIStore } from "@/store";
 
 
@@ -30,7 +30,7 @@ export default function TripItemModel({ title, route, visible, closeModal }: ITr
   }, []);
 
   const onTimeChange = (e, time) => {
-    setRouteData({ ...routeData, time: get12HrFormattedTime(time) })
+    setRouteData({ ...routeData, time: get24HrFormattedTime(time) })
     setShowPicker(false);
   };
 
@@ -130,7 +130,7 @@ export default function TripItemModel({ title, route, visible, closeModal }: ITr
           onPress={() => setShowPicker(true)}
         >{routeData.time}</Text>
         {showPicker && <DateTimePicker
-          value={new Date()}
+          value={getDateObjectFromTimeString(routeData.time)}
           testID="dateTimePicker"
           mode={'time'}
           is24Hour={true}

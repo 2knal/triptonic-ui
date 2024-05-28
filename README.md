@@ -11,6 +11,15 @@
 EXPO_PUBLIC_API_URL=<FLASK_REST_API_URL>
 EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 
+Before deploying to production (building APK)
+- Add below to app.json
+```json
+"config": {
+  "googleMaps": {
+    "apiKey": "<API_KEY>"
+  }
+}
+```
 
 ---
 

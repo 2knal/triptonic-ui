@@ -92,3 +92,11 @@ export const formatRoutes = (places): string => {
 
   return formattedText;
 };
+
+export function getDateObjectFromTimeString(timeString) {
+  const currentDate = new Date();
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const dateObject = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), hours, minutes);
+
+  return dateObject;
+}
