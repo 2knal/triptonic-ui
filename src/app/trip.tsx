@@ -17,6 +17,7 @@ import CoolText from "@/components/utils/cool-text";
 import { useToast } from "react-native-toast-notifications";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import MapTimeline from "@/components/map-timeline";
+import { TransportMode } from "@/utils";
 
 export default function Trip() {
   const searchParams = useLocalSearchParams();
@@ -31,10 +32,10 @@ export default function Trip() {
   const googleMapsAPIKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
   const toast = useToast();
   const router = useRouter();
-  type transportMode = 'DRIVING' | 'TRANSIT' | 'WALKING' | 'BICYCLING';
-  let modeOfTransport: transportMode = params.mode_of_transport as transportMode;
-  if (modeOfTransport === 'TRANSIT')
+  let modeOfTransport: TransportMode = params.mode_of_transport as TransportMode;
+  if (modeOfTransport === 'TRANSIT') {
     modeOfTransport = 'DRIVING';
+  }
 
   const animatetoMarkers = () => {
     if (!isLoading && mapRef.current && routes.length > 0) {
@@ -64,11 +65,11 @@ export default function Trip() {
         if ('id' in searchParams) {
           const tripId = searchParams?.id;
           setSavedTripId(tripId);
+          const data = await fetchTripDetails(searchParams?.id);
 
-          await fetchTripDetails(searchParams?.id);
-
-          setIsLoading(false);
           console.log('Came here from a magic link!')
+          console.log('Updated params:', data)
+          router.push({ pathname: '/trip', params: { ...data } });
           return;
         }
 

@@ -29,6 +29,8 @@ export interface ISavePayload {
   id?: string;
 }
 
+export type TransportMode = 'DRIVING' | 'TRANSIT' | 'WALKING' | 'BICYCLING';
+
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

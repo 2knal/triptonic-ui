@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, TextInput, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity, Share as OtherAppsShare } from "react-native";
 import CoolText from "@/components/utils/cool-text";
 import NavButton from "@/components/utils/nav-button";
 import * as Clipboard from 'expo-clipboard';
@@ -20,6 +20,32 @@ export default function Share() {
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(text);
   };
+
+  // const onShare = async () => {
+  //   try {
+  //     if (!await OtherAppsShare.isAvailableAsync()) {
+  //         alert("Sharing is not available on this platform");
+  //         return;
+  //     }
+
+  //     const result = await OtherAppsShare.share({
+  //       message:
+  //         'React Native | A framework for building native apps using React',
+  //     });
+  //     if (result.action === OtherAppsShare.sharedAction) {
+  //       if (result.activityType) {
+  //         // shared with activity type of result.activityType
+  //       } else {
+  //         // shared
+  //       }
+  //     } else if (result.action === OtherAppsShare.dismissedAction) {
+  //       // dismissed
+  //     }
+  //   } catch (error: any) {
+  //     Alert.alert(error.message);
+  //   }
+  // };
+
 
   useEffect(() => {
     async function saveTripToDB() {

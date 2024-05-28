@@ -9,13 +9,17 @@ import Heading from "@/components/utils/heading";
 import CoolText from "@/components/utils/cool-text";
 import { COLORS } from "assets/constants";
 import { useAPIStore } from "@/store";
-import { capitalizeFirstLetter, IPromptParams } from "@/utils";
+import { capitalizeFirstLetter, IPromptParams, TransportMode } from "@/utils";
 import { router } from "expo-router";
 
 export default function Filter() {
   const params = useAPIStore((state) => state.params);
   console.log('FILTER received', params);
   const { close: closePrompt } = useBottomSheet();
+  let transportMode: TransportMode = params?.mode_of_transport as TransportMode;
+  if (transportMode === 'TRANSIT') {
+    transportMode = 'DRIVING';
+  }
 
   const allCuisine = [
     "italian",
@@ -34,7 +38,7 @@ export default function Filter() {
   const [cuisineList, setCuisineList] = useState(params?.cuisine ? params.cuisine.split('|') : []);
   const [placesList, setPlacesList] = useState(params?.attractions ? params.attractions.split('|'): []);
   const [tripTypeList, setTripTypeList] = useState(params?.type_of_trip ? params.type_of_trip.split('|') : ['friends']);
-  const [transportList, setTransportList] = useState(params?.mode_of_transport ? [params.mode_of_transport.toLowerCase()] : ['driving']);
+  const [transportList, setTransportList] = useState(transportMode ? [params.mode_of_transport.toLowerCase()] : ['driving']);
   const [days, setDays] = useState(+params.duration);
   const [people, setPeople] = useState(+params.no_of_people);
   const [distance, setDistance] = useState(+params.distance);

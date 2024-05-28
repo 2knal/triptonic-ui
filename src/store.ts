@@ -266,8 +266,10 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       set({ params });
       set({ routes: places });
       set({ totalDays });
-
+      console.log('Updated local state with ', places, places, name)
+      return params;
     } catch (e) {
+      console.log('ERR FETCH TRIP DETAILS', e);
       return { 'error': true };
     }
   }

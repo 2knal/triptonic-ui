@@ -5,7 +5,7 @@ import { router } from "expo-router";
 
 import Textarea from "@/components/utils/textarea";
 import CoolButton from "@/components/utils/cool-button";
-import { usePromptStore } from "@/store";
+import { useAPIStore, usePromptStore } from "@/store";
 import { useToast } from "react-native-toast-notifications";
 
 
@@ -24,7 +24,7 @@ export default function Prompt() {
       });
       return;
     }
-    router.push({ pathname: '/trip' });
+    router.push({ pathname: '/trip', params: { id: 'keARQ' } });
   };
 
   return (
