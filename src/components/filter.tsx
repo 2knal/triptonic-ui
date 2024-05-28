@@ -30,11 +30,11 @@ export default function Filter() {
   ];
   const allPlaces = ["park", "museums", "clubs"];
   const allTripTypes = ["family", "friends", "couple"];
-  const modeOfTransport = ["car", "train", "bus", "plane"];
+  const modeOfTransport = ["DRIVING", "TRANSIT", "BICYCLING", "WALKING"];
   const [cuisineList, setCuisineList] = useState(params?.cuisine ? params.cuisine.split('|') : []);
-  const [placesList, setPlacesList] = useState(params?.attractions ? params.attractions.split('|') : []);
+  const [placesList, setPlacesList] = useState(params?.attractions ? params.attractions.split('|'): []);
   const [tripTypeList, setTripTypeList] = useState(params?.type_of_trip ? params.type_of_trip.split('|') : ['friends']);
-  const [transportList, setTransportList] = useState(params?.mode_of_transport ? params.mode_of_transport.split('|') : ['car']);
+  const [transportList, setTransportList] = useState(params?.mode_of_transport ? [params.mode_of_transport.toLowerCase()] : ['driving']);
   const [days, setDays] = useState(+params.duration);
   const [people, setPeople] = useState(+params.no_of_people);
   const [distance, setDistance] = useState(+params.distance);
@@ -68,10 +68,8 @@ export default function Filter() {
   };
 
   const onTransportBtnPress = (transport: string) => {
-    console.log(transport, transportList);
     if (transportList.includes(transport)) {
-      const index = transportList.indexOf(transport);
-      transportList.splice(index, 1);
+      setTransportList(prev => prev.filter(p => p !== transport));
     } else if (transport !== '') {
       setTransportList([ ...transportList, transport ]);
     }
@@ -79,8 +77,7 @@ export default function Filter() {
 
   const onPlacesBtnPress = (place: string) => {
     if (placesList.includes(place)) {
-      const index = placesList.indexOf(place);
-      placesList.splice(index, 1);
+      setPlacesList(prev => prev.filter(p => p !== place));
     } else if (place !== '') {
       setPlacesList([ ...placesList, place ]);
     }
@@ -95,6 +92,8 @@ export default function Filter() {
       type_of_trip: tripTypeList.join('|'),
       no_of_people: people,
       attractions: placesList.join('|'),
+      distance,
+      budget
     }
     router.push({ pathname: '/trip' , params: { ...sendParams }});
   };
@@ -217,9 +216,9 @@ export default function Filter() {
           return (
             <Pill
               key={i}
-              title={capitalizeFirstLetter(value)}
+              title={value[0] + value.slice(1).toLowerCase()}
               list={transportList}
-              onPress={() => onTransportBtnPress(value)}
+              onPress={() => onTransportBtnPress(value.toLowerCase())}
             />
           );
         })}
