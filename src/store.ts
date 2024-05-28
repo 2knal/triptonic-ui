@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IPromptParams } from "./utils";
+import { IPromptParams, ISavePayload } from "./utils";
 import { stateCache } from "expo-router/build/getLinkingConfig";
 
 type PromptStore = {
@@ -11,6 +11,7 @@ type APIStore = {
   tripName: string;
   routes: any;
   params: IPromptParams;
+  savedTripId: string;
   setParams: (IPromptParams) => void;
   fetchRoutes: (string) => any;
   getRoutes: () => any;
@@ -26,6 +27,8 @@ type APIStore = {
   editRoute: (any) => void;
   setTotalDays: () => void;
   saveTrip: () => any;
+  fetchTripDetails: (string) => any;
+  setSavedTripId: (string) => void;
 }
 
 export const usePromptStore = create<PromptStore>((set) => ({
@@ -34,6 +37,8 @@ export const usePromptStore = create<PromptStore>((set) => ({
 }));
 
 export const useAPIStore = create<APIStore>((set, get) => ({
+  savedTripId: '',
+  setSavedTripId: (savedTripId) => set({ savedTripId }),
   totalDays: 1,
   tripName: '',
   params: {
@@ -219,20 +224,24 @@ export const useAPIStore = create<APIStore>((set, get) => ({
     };
   }),
   saveTrip: async () => {
-    const { tripName, routes, params } = get(); 
+    const { tripName, routes, params, savedTripId } = get(); 
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
     const url = API_ENDPOINT + '/save';
+    let payload: ISavePayload = { 
+      name: tripName,
+      places: routes,
+      params
+    };
+    if (savedTripId) {
+      payload = { ...payload, id: savedTripId }
+    }
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-          name: tripName,
-          places: routes,
-          params
-        })
+        body: JSON.stringify(payload)
       });
       const updatedResponse = await response.json();      
       return updatedResponse;
@@ -240,4 +249,26 @@ export const useAPIStore = create<APIStore>((set, get) => ({
       return { 'error': true };
     }
   },
+  fetchTripDetails: async (id: string) => {
+    const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
+    const url = API_ENDPOINT + '/get_trip/' + id;
+    try {
+      const response = await fetch(url);
+      const updatedResponse = await response.json();      
+      const { name, params, places } = updatedResponse;
+
+      let totalDays = 1;
+      for (const place of places) {
+        totalDays = Math.max(totalDays, place.day);
+      }
+
+      set({ tripName: name });
+      set({ params });
+      set({ routes: places });
+      set({ totalDays });
+
+    } catch (e) {
+      return { 'error': true };
+    }
+  }
 }));

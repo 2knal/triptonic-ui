@@ -13,9 +13,9 @@ import { useRouter } from "expo-router";
 export default function Share() {
   const toast = useToast();
   const router = useRouter();
-  const { saveTrip } = useAPIStore();
+  const { saveTrip, savedTripId } = useAPIStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [text, setText] = useState('triptonic.com/34fgh46');
+  const [text, setText] = useState('triptonic://trip?id=' + savedTripId);
 
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(text);

@@ -22,6 +22,13 @@ export interface IRoute {
   type: 'restaurant' | 'tourist' | 'transit'
 }
 
+export interface ISavePayload {
+  name: string;
+  places: any;
+  params: IPromptParams;
+  id?: string;
+}
+
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

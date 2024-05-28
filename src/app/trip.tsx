@@ -1,4 +1,4 @@
-import { View, Text, Image, ImageBackground, StyleSheet } from "react-native";
+import { View, Text, Image, ImageBackground, TextInput } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useEffect, useRef, useState } from "react";
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
@@ -22,7 +22,7 @@ export default function Trip() {
   const searchParams = useLocalSearchParams();
   console.log('Received params:', searchParams);
   const { prompt } = usePromptStore();
-  const { routes, fetchRoutes, fetchRoutesWithParams, params } = useAPIStore();
+  const { routes, fetchRoutes, fetchRoutesWithParams, params, fetchTripDetails, setSavedTripId } = useAPIStore();
   const [isLoading, setIsLoading] = useState(true);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [navbarScr, setNavbarScr] = useState(1);
@@ -61,6 +61,17 @@ export default function Trip() {
       if (isLoading) {
         console.log('Sending prompt...', prompt);
         console.log('Sending params (if any)', searchParams)
+        if ('id' in searchParams) {
+          const tripId = searchParams?.id;
+          setSavedTripId(tripId);
+
+          await fetchTripDetails(searchParams?.id);
+
+          setIsLoading(false);
+          console.log('Came here from a magic link!')
+          return;
+        }
+
         const data = (Object.keys(searchParams).length !== 0) 
           ? await fetchRoutesWithParams(searchParams) 
           : await fetchRoutes(prompt);
@@ -79,7 +90,6 @@ export default function Trip() {
           router.push({ pathname: '/' });
           return;
         }
-        // console.log('GOT EM ALL', data);
         setIsLoading(false);
       }
     }
