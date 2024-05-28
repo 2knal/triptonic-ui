@@ -24,7 +24,7 @@ export default function Prompt() {
       });
       return;
     }
-    router.push({ pathname: '/trip', params: { id: 'keARQ' } });
+    router.push({ pathname: '/trip' });
   };
 
   return (

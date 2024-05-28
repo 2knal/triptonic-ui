@@ -19,7 +19,7 @@ export default function Index() {
           buttonCss="w-80 bg-reddish "
           textCss="color-egg-white"
           text={"Let's plan!"} />
-        </View>
+      </View>
       <ActionSheet ref={bottomSheetRef} index={0} children={<Prompt />} />
     </View>
   );

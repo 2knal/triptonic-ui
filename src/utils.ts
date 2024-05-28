@@ -72,3 +72,23 @@ export interface IPromptParams {
   timings?: string;
   budget?: string;
 }
+
+export const formatRoutes = (places): string => {
+  const totalDays = Math.max(...places.map(p => p.day));
+  
+  const dayMapper = {};
+  for (let i = 1; i <= totalDays; i++) {
+    dayMapper[i] = places.filter(p => p.day === i);
+  }
+
+  let formattedText = "";
+  for (let i = 1; i <= totalDays; i++) {
+    formattedText += `*Day ${i}*\n\n`;
+    for (const place of dayMapper[i]) {
+      formattedText += `* At ${place.time}, visit ${place.name}\n`;
+    }
+    formattedText += "\n";
+  }
+
+  return formattedText;
+};
