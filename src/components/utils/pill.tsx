@@ -1,6 +1,6 @@
 import { COLORS } from 'assets/constants';
 import React from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
 
 interface IButtonProps {
   onPress: any;
@@ -16,10 +16,10 @@ export default function Pill(props: IButtonProps) {
   const extText = selected ? { color: 'white' }: styles.nothing;
 
   return (
-    <Pressable style={[styles.button, extStyle]} onPress={onPress}
+    <TouchableOpacity style={[styles.button, extStyle]} onPress={onPress}
     className="w-32 flex items-center justify-center px-4 py-3 border-reddish">
       <Text style={[styles.text, extText]} className="color-reddish font-rethink">{title}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     lineHeight: 15,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
     color: COLORS['reddish'],
     fontFamily: 'rethink'
   },

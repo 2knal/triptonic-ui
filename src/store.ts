@@ -45,7 +45,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
     const url = API_ENDPOINT + '/prompt';
-    // const url = 'https://gauravghati.github.io/apis/data.json';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -54,8 +53,11 @@ export const useAPIStore = create<APIStore>((set, get) => ({
         },
         body: JSON.stringify({ prompt: p })
       });
-      // const response = await fetch(url);
       const updatedResponse = await response.json();
+      if ('error' in updatedResponse) {
+        return updatedResponse;
+      }
+
       const { places, prompt } = updatedResponse;
       let count = 1;
       for (const place of places) {
@@ -73,7 +75,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
 
       return places;
     } catch (e) {
-      console.log(e);
       return { 'error': true };
     }
   },
@@ -81,7 +82,6 @@ export const useAPIStore = create<APIStore>((set, get) => ({
     console.log('I am here! with', p);
     const API_ENDPOINT = process.env.EXPO_PUBLIC_API_URL;
     const url = API_ENDPOINT + '/apply_filters';
-    // const url = 'https://gauravghati.github.io/apis/data.json';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -90,8 +90,11 @@ export const useAPIStore = create<APIStore>((set, get) => ({
         },
         body: JSON.stringify({ ...p })
       });
-      // const response = await fetch(url);
       const updatedResponse = await response.json();
+      if ('error' in updatedResponse) {
+        return updatedResponse;
+      }
+
       const { places, prompt } = updatedResponse;
       let count = 1;
       for (const place of places) {

@@ -7,7 +7,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { COLORS } from "assets/constants";
 import { useAPIStore } from "@/store";
 import Loader from "@/components/loader";
-import { useToast } from "react-native-toast-notifications";
+import { useToast, ToastOptions } from "react-native-toast-notifications";
 import { useRouter } from "expo-router";
 
 export default function Share() {
@@ -27,7 +27,11 @@ export default function Share() {
         const data = await saveTrip();
         if ('error' in data) {
           toast.show("Unable to save trip. Please try again later :(", {
-            type: 'danger'
+            type: 'danger',
+            placement: 'top',
+            duration: 3000,
+            swipeEnabled: true,
+            animationType: 'zoom-in'
           });
           router.push({ pathname: '/save' });
           return;

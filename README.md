@@ -37,6 +37,7 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] Add custom markers and callbacks
   - [ ] Add shadows to markers and callbacks
   - [ ] Render image in callback, unable to do so
+  - [x] Enrich callback
 - [x] Handle BottomSheet scroll
 - [ ] Handle trip-generation loader properly, there is some lag
 - [x] onclick button color change
@@ -44,9 +45,9 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [x] arrow up/down for timeline items
   - [ ] Timeline items animation
   - [ ] Rotate settings gear icon
-- [ ] Send proper defaults from backend API route for each prompt params
-- [ ] For food-stuff send me proper cuisine, and not the food as cuisine
-- [ ] Handle multiple values for individual params
+- [x] Send proper defaults from backend API route for each prompt params
+- [x] For food-stuff send me proper cuisine, and not the food as cuisine
+- [x] Handle multiple values for individual params
 - [x] Day wise split, UI changes
 - [ ] Handle back navigation re-request to backend API
 - [ ] Edit Modal default value 
@@ -55,6 +56,7 @@ EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 - [ ] Add mode of transport to path drawing
   - "DRIVING", "BICYCLING", "WALKING", and "TRANSIT" from backend
 - [ ] Add proper types for routes instead of using any
+- [ ] Add rough total cost of the trip and per person too?
 ---
 
 ### Troubleshooting

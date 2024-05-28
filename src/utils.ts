@@ -12,6 +12,14 @@ export interface IRoute {
   notes?: string;
   rating?: number;
   cost?: number;
+  business_status?: string;
+  description?: string;
+  id?: string;
+  serves?: string[];
+  todays_working_hours?: string;
+  total_reviews?: number;
+  website?: string;
+  type: 'restaurant' | 'tourist' | 'transit'
 }
 
 export function capitalizeFirstLetter(string) {
@@ -50,4 +58,8 @@ export interface IPromptParams {
   type_of_trip?: string;
   cuisine?: string;
   attractions?: string;
+  origin?: string;
+  distance?: number;
+  timings?: string;
+  budget?: string;
 }

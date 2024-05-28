@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useBottomSheet } from "@gorhom/bottom-sheet";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 
 import CoolButton from "@/components/utils/cool-button";
@@ -37,6 +37,18 @@ export default function Filter() {
   const [transportList, setTransportList] = useState(params?.mode_of_transport ? params.mode_of_transport.split('|') : ['car']);
   const [days, setDays] = useState(+params.duration);
   const [people, setPeople] = useState(+params.no_of_people);
+  const [distance, setDistance] = useState(+params.distance);
+  const budgetValues = ['low', 'medium', 'high'];
+
+  const getPillBtnStyle = (value) => {
+    return value === budget ? styles.selected: styles.nothing;
+  };
+
+  const getPillTextStyle = (value) => {
+    return value === budget ? { color: 'white' }: styles.nothing;
+  };
+
+  const [budget, setBudget] = useState(params.budget);
 
   const onCuisineBtnPress = (cuisine: string) => {
     if (cuisineList.includes(cuisine)) {
@@ -125,6 +137,38 @@ export default function Filter() {
         />
       </View>
 
+      <View className="flex-row justify-between">
+        <CoolText title="Preferred distance of travel (miles)" css="text-xl pb-2" />
+        <CoolText title={distance} />
+      </View>
+      <View className="flex pb-4">
+        <Slider
+          value={distance}
+          minimumValue={0}
+          maximumValue={500}
+          minimumTrackTintColor={COLORS['reddish']}
+          thumbTintColor={COLORS['sageish']}
+          maximumTrackTintColor="grey"
+          onValueChange={(value) => setDistance(Math.round(value))}
+        />
+      </View>
+
+      <CoolText title="Budget" css="text-xl pb-2" />
+      <View className="flex-row justify-around flex-wrap pb-8">
+        {budgetValues.map((value) => (
+          <TouchableOpacity
+            key={value}
+            style={[styles.button, getPillBtnStyle(value)]}
+            className="w-32 flex items-center justify-center px-4 py-3 border-reddish"
+            onPress={() => setBudget(value)}
+          >
+            <Text style={[styles.text, getPillTextStyle(value)]}>
+              {capitalizeFirstLetter(value)}
+            </Text>
+          </TouchableOpacity>
+        ))}
+     </View>
+
       <CoolText title="Cuisine" css="text-xl pb-2" />
       <View className="flex-row justify-around flex-wrap pb-8">
         {allCuisine.map((value, i) => {
@@ -198,3 +242,29 @@ export default function Filter() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: 'baseline',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginBottom: 5,
+    marginTop: 5,
+    borderRadius: 40,
+    backgroundColor: 'white',
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: COLORS['reddish'],
+  },
+  nothing: {},
+  selected: {
+    backgroundColor: COLORS['reddish']
+  },
+  text: {
+    fontSize: 14,
+    lineHeight: 15,
+    color: COLORS['reddish'],
+    fontFamily: 'rethink'
+  },
+});

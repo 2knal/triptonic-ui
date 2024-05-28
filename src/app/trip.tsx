@@ -19,10 +19,10 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import MapTimeline from "@/components/map-timeline";
 
 export default function Trip() {
-  const params = useLocalSearchParams();
-  console.log('Received params:', params);
+  const searchParams = useLocalSearchParams();
+  console.log('Received params:', searchParams);
   const { prompt } = usePromptStore();
-  const { routes, fetchRoutes, fetchRoutesWithParams } = useAPIStore();
+  const { routes, fetchRoutes, fetchRoutesWithParams, params } = useAPIStore();
   const [isLoading, setIsLoading] = useState(true);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [navbarScr, setNavbarScr] = useState(1);
@@ -31,6 +31,10 @@ export default function Trip() {
   const googleMapsAPIKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
   const toast = useToast();
   const router = useRouter();
+  type transportMode = 'DRIVING' | 'TRANSIT' | 'WALKING' | 'BICYCLING';
+  let modeOfTransport: transportMode = params.mode_of_transport as transportMode;
+  if (modeOfTransport === 'TRANSIT')
+    modeOfTransport = 'DRIVING';
 
   const animatetoMarkers = () => {
     if (!isLoading && mapRef.current && routes.length > 0) {
@@ -56,14 +60,21 @@ export default function Trip() {
 
       if (isLoading) {
         console.log('Sending prompt...', prompt);
-        console.log('Sending params (if any)', params)
-        const data = (Object.keys(params).length !== 0) 
-          ? await fetchRoutesWithParams(params) 
+        console.log('Sending params (if any)', searchParams)
+        const data = (Object.keys(searchParams).length !== 0) 
+          ? await fetchRoutesWithParams(searchParams) 
           : await fetchRoutes(prompt);
 
         if ('error' in data) {
-          toast.show("Something went wrong. Please try again later :(", {
-            type: 'danger'
+          const errMsg = data['error'];
+          console.log('RESPONSE FROM API:', data);
+          const toastMsg = (errMsg == 'UNREASONABLE_REQUEST') ? "Nice try. Think again!" : "Something went wrong. Please try again later :(";
+
+          toast.show(toastMsg, {
+            type: 'danger',
+            duration: 3000,
+            swipeEnabled: true,
+            animationType: 'zoom-in'
           });
           router.push({ pathname: '/' });
           return;
@@ -118,6 +129,7 @@ export default function Trip() {
           waypoints={routes.slice(1, -1)}
           apikey={googleMapsAPIKey}
           strokeWidth={4}
+          mode={modeOfTransport}
           strokeColor={COLORS['reddish']}
         />
       </MapView>

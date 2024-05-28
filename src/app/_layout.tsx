@@ -63,13 +63,13 @@ export default function Layout() {
   return (
     <SafeAreaProvider>
         <MenuProvider>
-          <ToastProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <StatusBar style="dark" backgroundColor={COLORS["egg-white"]} />
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar style="dark" backgroundColor={COLORS["egg-white"]} />
+            <ToastProvider>
               <Header />
               <Slot />
-            </GestureHandlerRootView>
-          </ToastProvider>
+            </ToastProvider>
+          </GestureHandlerRootView>
         </MenuProvider>
     </SafeAreaProvider>
   );

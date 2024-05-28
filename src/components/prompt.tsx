@@ -17,7 +17,11 @@ export default function Prompt() {
 
   const generateTrip = async () => {
     if (prompt === '') {
-      toast.show("Please add a text prompt");
+      toast.show("Please add a text prompt", {
+        duration: 3000,
+        swipeEnabled: true,
+        animationType: 'zoom-in'
+      });
       return;
     }
     router.push({ pathname: '/trip' });
