@@ -24,7 +24,7 @@
       "package": "app.triptonic",
       "adaptiveIcon": {
         "foregroundImage": "./assets/triptonic-logo.png",
-        "backgroundColor": "#F5ECE9"
+        "backgroundColor": "#FFF7F5"
       }
     },
     "web": {
