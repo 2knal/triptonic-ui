@@ -44,7 +44,7 @@ export default function NavBar(props: INavBarProps) {
           onPress={() => onPress(3)}
           optionSelectedCss={optionNo === 3 ? 'bg-egg-white' : ''}
           optionNo={3}
-          fontName={"map"} color={optionNo === 3 ? COLORS["reddish"] : COLORS["egg-white"]} />
+          fontName={"map-pin"} color={optionNo === 3 ? COLORS["reddish"] : COLORS["egg-white"]} />
         <NavBarIcon
           onPress={() => {
             onPress(4);

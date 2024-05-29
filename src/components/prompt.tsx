@@ -30,7 +30,7 @@ export default function Prompt() {
   return (
     <View className="flex flex-1 p-6 w-full">
       <Textarea
-        placeholder="Enter Trip prompt..."
+        placeholder="Plan a trip to New York..."
         text={prompt}
         onChangeText={(t: string) => changePrompt(t)}
       />
