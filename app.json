@@ -23,7 +23,7 @@
     "android": {
       "package": "app.triptonic",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/triptonic-logo.png",
+        "foregroundImage": "./assets/triptonic-app-icon.png",
         "backgroundColor": "#FFF7F5"
       }
     },
